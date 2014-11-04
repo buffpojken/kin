@@ -1,6 +1,7 @@
-# Own rules #
+# Kin rules #
 #############
 /vendor
+config.codekit
 
 ###################
 # Compiled source #
