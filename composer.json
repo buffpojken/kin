@@ -1,0 +1,17 @@
+{
+	"name": "kin",
+	"description": "Custom system for running a closed social network",
+	"keywords": ["oss"],
+	"homepage": "http://ihateithe.re/projects/kin/",
+	"authors": [
+		{
+			"name": "Thomas Mertz",
+			"email": "tm@peytz.dk",
+			"homepage": "http://peytz.dk/"
+		}
+	],
+	"require": {
+		"jv2222/ezsql": "dev-master",
+		"phpmailer/phpmailer": "5.2.9"
+	}
+}
