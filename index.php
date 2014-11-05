@@ -16,7 +16,7 @@ session_start();
 		<script src="assets/js/bootstrap.min.js" charset="utf-8"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-default" role="navigation">
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -36,6 +36,7 @@ session_start();
 						<li><a href="#">Messages</a></li>
 						<li><a href="#">Groups</a></li>
 						<li><a href="#">Friends</a></li>
+						<li><a href="#">Notifications</a></li>
 					</ul>
 					
 					<ul class="nav navbar-nav navbar-right">
@@ -44,7 +45,6 @@ session_start();
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="#">Profile</a></li>
 								<li><a href="#">Settings</a></li>
-								<li><a href="#">Notifications</a></li>
 								<li class="divider"></li>
 								<li><a href="#">Sign out</a></li>
 							</ul>
@@ -54,10 +54,13 @@ session_start();
 			</div><!-- /.container-fluid -->
 		</nav>
 		
-		<div class="container">
+		<div id="site-body" class="container">
 			<div class="row">
-				<div class="col-md-12">
-					<p>Foobar</p>
+				<div class="col-md-4">
+					<p>Sidebar</p>
+				</div>
+				<div class="col-md-8">
+					<p>Content</p>
 				</div>
 			</div>
 		</div>
