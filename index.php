@@ -1,5 +1,8 @@
 <?php
 session_start();
+ob_start();
+require_once 'includes/classes/Kin_User.class.php';
+$user = new Kin_User;
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +44,7 @@ session_start();
 					
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, %name% <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <?php echo $user->name; ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="#">Profile</a></li>
 								<li><a href="#">Settings</a></li>
@@ -60,15 +63,15 @@ session_start();
 					<p>Sidebar</p>
 				</div>
 				<div class="col-md-8">
-					<div class="well well-sm">
-						<form id="postUpdateForm" role="form" method="post" action="">
-							<label for="updateMessage">Hi %name%, what's on your mind?</label>
-							<input type="text" name="updateMessage" />
-						</form>
-					</div>
+					<form id="postUpdateForm" role="form" method="post" action="">
+						<label for="updateMessage">Hi %name%, what's on your mind?</label>
+						<input type="text" name="updateMessage" />
+					</form>
+					<hr />
 				</div>
 			</div>
 		</div>
 		
 	</body>
 </html>
+<?php ob_end_flush(); ?>
