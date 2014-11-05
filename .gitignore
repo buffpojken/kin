@@ -2,6 +2,7 @@
 #############
 /vendor
 config.codekit
+config.inc.php
 
 ###################
 # Compiled source #
