@@ -1,6 +1,9 @@
 # Kin rules #
 #############
 /vendor
+/uploads/*.jpg
+/uploads/*.gif
+/uploads/*.png
 config.codekit
 config.inc.php
 
