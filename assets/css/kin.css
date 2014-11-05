@@ -1,5 +1,6 @@
 body {
-  background-color: black;
+  background-image: -webkit-radial-gradient(circle, #000000, greyh);
+  background-image: radial-gradient(circle, #000000, greyh);
 }
 body #site-body {
   background-color: white;
