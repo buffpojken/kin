@@ -60,7 +60,12 @@ session_start();
 					<p>Sidebar</p>
 				</div>
 				<div class="col-md-8">
-					<p>Content</p>
+					<div class="well well-sm">
+						<form id="postUpdateForm" role="form" method="post" action="">
+							<label for="updateMessage">Hi %name%, what's on your mind?</label>
+							<input type="text" name="updateMessage" />
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
