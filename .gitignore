@@ -1,9 +1,9 @@
 # Kin rules #
 #############
 /vendor
-/uploads/*.jpg
-/uploads/*.gif
-/uploads/*.png
+/uploads/avatars/*.jpg
+/uploads/avatars/*.gif
+/uploads/avatars/*.png
 config.codekit
 config.inc.php
 

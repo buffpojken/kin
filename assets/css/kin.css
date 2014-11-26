@@ -1,9 +1,16 @@
-body {
-  background-image: -webkit-radial-gradient(circle, #000000, greyh);
-  background-image: radial-gradient(circle, #000000, greyh);
-}
 body #site-body {
   background-color: white;
   min-height: 100vh;
   padding-top: 70px;
+}
+body #site-body form#post-update {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eaeaea;
+}
+body #sidebar {
+  color: #919191;
+}
+body #sidebar p.copyright {
+  text-align: center;
 }
