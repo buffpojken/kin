@@ -2,6 +2,7 @@
 session_start();
 ob_start();
 require_once('config.inc.php');
+require_once( GLOBALS_PATH . '/ajax.inc.php' );
 require_once( GLOBALS_PATH . '/header.inc.php' );
 
 if( $_GET["action"] == "logout" ) {

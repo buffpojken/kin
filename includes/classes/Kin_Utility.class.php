@@ -5,7 +5,6 @@ class Kin_Utility {
 		$date = new DateTime();
 		$date->setTimestamp(strtotime($timestamp));
 		$interval = $date->diff(new DateTime('now'));
-		#echo '<pre>' . print_r( $interval, true ) . '</pre>';
 		if( $interval->y != 0 ) {
 			if( $interval->y == 1 ) {
 				$format .= '%y year, ';
@@ -45,6 +44,13 @@ class Kin_Utility {
 				$format .= '%i min ago';
 			} else {
 				$format .= '%i mins ago';
+			}
+		}
+		if( $interval->s != 0 ) {
+			if( $interval->i == 1 ) {
+				$format .= ' and %s second ago';
+			} else {
+				$format .= ' and %s seconds ago';
 			}
 		}
 		echo $interval->format( $format );
