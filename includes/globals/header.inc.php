@@ -42,7 +42,10 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <?php $user->getUserData($_SESSION["userID"],'name', TRUE); ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="/profile">Profile</a></li>
-								<!--<li><a href="/settings">Settings</a></li>-->
+								<?php if( $user->getUserData($_SESSION["userID"],'siteAdmin') == 1 ) { ?>
+								<li class="divider"></li>
+								<li><a href="/administration">Administration</a></li>	
+								<?php } ?>
 								<li class="divider"></li>
 								<li><a href="?action=logout">Sign out</a></li>
 							</ul>
