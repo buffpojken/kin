@@ -16,7 +16,7 @@ $(document).ready( function(){
 			console.log( 'The following message returned: '+ textStatus + ' / ', response );
 			$('textarea#statusUpdate').val('');
 			$('textarea#statusUpdate').animate({ height: 30 }, 'normal');
-			$(response).hide().prependTo('ul#updates').fadeIn('slow');
+			$('ul#updates').hide().prepend(response).fadeIn('slow');
 		});
 		
 		request.fail(function (jqXHR, textStatus, errorThrown){
