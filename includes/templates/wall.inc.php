@@ -10,9 +10,9 @@
 
 <ul id="updates">
 <?php
-$updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY timestamp DESC" );
+$updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC" );
 foreach( $updates as $update ) { ?>
-	<li class="update" data-timestamp="<?php echo strtotime( $update->timestamp ); ?>">
+	<li class="update" data-update-id="<?php echo $update->id; ?>">
 		<header class="update-header">
 			<img src="/uploads/avatars/<?php echo $_SESSION['userID']; ?>-40x40.jpg" class="portrait" />
 			<h4><a href="/profile/<?php $user->getUserData($update->userID,'username', TRUE); ?>"><?php $user->getUserData($update->userID,'name', TRUE); ?> <?php $user->getUserData($update->userID,'surname', TRUE); ?></a></h4>

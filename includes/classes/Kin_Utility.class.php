@@ -1,7 +1,7 @@
 <?php
 class Kin_Utility {
 	
-	public function timeSince($timestamp) {
+	public function timeSince($timestamp,$echo=TRUE) {
 		$date = new DateTime();
 		$date->setTimestamp(strtotime($timestamp));
 		$interval = $date->diff(new DateTime('now'));
@@ -53,7 +53,11 @@ class Kin_Utility {
 				$format .= ' and %s seconds ago';
 			}
 		}
-		echo $interval->format( $format );
+		if( $echo ) {
+			echo $interval->format( $format );
+		} else {
+			return $interval->format( $format );
+		}
 	}
 
 }
