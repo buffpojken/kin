@@ -16,7 +16,7 @@
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
-			<?php if( isset( $_SESSION["user"] ) ) { ?>
+			<?php if( isset( $_SESSION["userID"] ) ) { ?>
 			<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -39,7 +39,7 @@
 					
 					<ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <?php echo $_SESSION["user"]->name; ?> <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <?php $user->getUserData($_SESSION["userID"],'name', TRUE); ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="/profile">Profile</a></li>
 								<!--<li><a href="/settings">Settings</a></li>-->

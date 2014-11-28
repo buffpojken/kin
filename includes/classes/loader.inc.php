@@ -5,7 +5,7 @@ if ( $handle = opendir( CLASSES_PATH ) ) {
 		
         if ( $entry != "." && $entry != ".." && $entry != 'loader.inc.php' ) {
 			require_once $entry;
-            #echo "$entry\n";
+            #echo "<p>$entry</p>\n";
         }
     }
 
