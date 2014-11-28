@@ -1,4 +1,42 @@
 $(document).ready( function(){
+	$('a.likeUpdate').on('click', function() {
+		var $text = $(this).text();
+		var $updateID = $(this).data('id');
+		var $identifier = $(this).attr('id');
+		if( $text == 'Like' ) {
+			request = $.ajax({
+				url: '/',
+				type: 'post',
+				data: { ajax: '1', action:	'likeUpdate', updateID: $updateID }
+			});
+			
+			request.done(function (response, textStatus, jqXHR){
+				//console.log( 'The following message returned: '+ textStatus + ' / ', response );
+				$('a.likeUpdate#'+$identifier).text('Unlike');
+			});
+			
+			request.fail(function (jqXHR, textStatus, errorThrown){
+				console.error( 'The following error occurred: '+ textStatus, errorThrown );
+			});
+		} else {
+			request = $.ajax({
+				url: '/',
+				type: 'post',
+				data: { ajax: '1', action:	'unlikeUpdate', updateID: $updateID }
+			});
+			
+			request.done(function (response, textStatus, jqXHR){
+				//console.log( 'The following message returned: '+ textStatus + ' / ', response );
+				$('a.likeUpdate#'+$identifier).text('Like');
+			});
+			
+			request.fail(function (jqXHR, textStatus, errorThrown){
+				console.error( 'The following error occurred: '+ textStatus, errorThrown );
+			});
+		}
+		event.preventDefault();
+	});
+	
 	$('form#post-update').submit(function(event){
 		var $form = $(this);
 		var $update = $('textarea#statusUpdate').val();
@@ -44,5 +82,3 @@ $(document).ready( function(){
 		}
 	});
 });
-
-function fetchNewUpdates() {}

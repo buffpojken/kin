@@ -11,7 +11,9 @@
 <ul id="updates">
 <?php
 $updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC LIMIT 15" );
-foreach( $updates as $update ) { ?>
+foreach( $updates as $update ) {
+	$update = new Kin_Update;
+?>
 	<li class="update" data-update-id="<?php echo $update->id; ?>">
 		<header class="update-header">
 			<img src="/uploads/avatars/<?php echo $_SESSION['userID']; ?>-40x40.jpg" class="portrait" />
@@ -21,8 +23,9 @@ foreach( $updates as $update ) { ?>
 		<?php echo $update->message; ?>
 		<footer class="update-footer">
 			<p>
-				<a href="#">Like</a> · 
+				<a href="#" class="likeUpdate" id="like-<?php echo $update->id; ?>" data-id="<?php echo $update->id; ?>">Like</a> · 
 				<a href="#">Comment</a>
+				<span class="likes-wrapper"></span>
 			</p>
 		</footer>
 	</li>
