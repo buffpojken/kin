@@ -2,10 +2,8 @@
 	<legend>Come on in ...</legend>
 	
 	<?php 
-	#echo '<pre>' . print_r( $_POST ) . '</pre>';	
 	if( isset( $_POST['action'] ) && $_POST['action']=='executeLogin' ) {
 		
-		#$user = new Kin_User;
 		$user->authorize( $_POST['login_email'], $_POST['login_password'], $_POST['login_cookie'] );
 		
 	} ?>
