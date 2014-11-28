@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Kin</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/bootstrap.min.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="assets/css/bootstrap.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
 		<link rel="stylesheet" href="assets/css/kin.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
 		<!-- JS -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
