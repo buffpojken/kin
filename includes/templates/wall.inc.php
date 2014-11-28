@@ -7,13 +7,23 @@
 </form>
 
 <ul id="updates">
+<?php
+$updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY timestamp DESC" );
+foreach( $updates as $update ) { ?>
 	<li class="update">
 		<header class="update-header">
-			<img src="http://placehold.it/40x40" class="portrait" />
-			<h4>Thomas Mertz</h4>
-			<p class="metadata">3 hrs</p>
+			<img src="/uploads/avatars/<?php echo $_SESSION['userID']; ?>-40x40.jpg" class="portrait" />
+			<h4><?php $user->getUserData($update->userID,'name', TRUE); ?> <?php $user->getUserData($update->userID,'surname', TRUE); ?></h4>
+			<p class="metadata">
+			<?php
+			date_default_timezone_set('Europe/Copenhagen');
+			$date = new DateTime();
+			$date->setTimestamp(strtotime($update->timestamp));
+			$interval = $date->diff(new DateTime('now'));
+			echo $interval->format('%y years, %m months, %d days, %h hours and %i minutes ago'); ?>
+			</p>
 		</header>
-		<p>Donec ullamcorper nulla non metus auctor fringilla. Donec id elit non mi porta gravida at eget metus. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+		<?php echo $update->message; ?>
 		<footer class="update-footer">
 			<p>
 				<a href="#">Like</a> · 
@@ -21,4 +31,5 @@
 			</p>
 		</footer>
 	</li>
+<?php } ?>
 </ul>
