@@ -10,7 +10,7 @@
 
 <ul id="updates">
 <?php
-$updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC" );
+$updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC LIMIT 15" );
 foreach( $updates as $update ) { ?>
 	<li class="update" data-update-id="<?php echo $update->id; ?>">
 		<header class="update-header">
