@@ -32,6 +32,9 @@ class Kin_User {
 			}
 			echo '</ul></div>';
 		}
+		if( $cookie == 'yes' ) {
+			setcookie ( 'kin_social_login', $this->getUserData($userID,'userHash'), time() + 60 * 60 * 24 * 14 );
+		}
 	}
 	
 	public function updatePassword( $currentPassword, $newPassword, $newPasswordRepeated ) {

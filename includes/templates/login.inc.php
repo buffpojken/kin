@@ -7,7 +7,6 @@
 		$user->authorize( $_POST['login_email'], $_POST['login_password'], $_POST['login_cookie'] );
 		
 	} ?>
-	
 	<div class="form-group">
 		<label for="login_email">Email address</label>
 		<input type="email" class="form-control" id="login_email" name="login_email" placeholder="Enter email">
