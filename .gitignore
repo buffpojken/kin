@@ -6,6 +6,7 @@
 /uploads/avatars/*.png
 config.codekit
 config.inc.php
+dandelion.yml
 
 ###################
 # Compiled source #
