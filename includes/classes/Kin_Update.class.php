@@ -1,5 +1,5 @@
 <?php
-class Kin_Updates {
+class Kin_Update {
 	
 	public function isThisLiked($userID, $updateID) {
 		global $db;

@@ -12,7 +12,7 @@
 <?php
 $updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC LIMIT 15" );
 foreach( $updates as $update ) {
-	$update = new Kin_Update;
+	#$update = new Kin_Update;
 ?>
 	<li class="update" data-update-id="<?php echo $update->id; ?>">
 		<header class="update-header">
