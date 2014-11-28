@@ -13,8 +13,8 @@ foreach( $updates as $update ) { ?>
 	<li class="update">
 		<header class="update-header">
 			<img src="/uploads/avatars/<?php echo $_SESSION['userID']; ?>-40x40.jpg" class="portrait" />
-			<h4><?php $user->getUserData($update->userID,'name', TRUE); ?> <?php $user->getUserData($update->userID,'surname', TRUE); ?></h4>
-			<p class="metadata"><?php echo $utility->updateTimeSince($update->timestamp); ?></p>
+			<h4><a href="/profile/<?php $user->getUserData($update->userID,'username', TRUE); ?>"><?php $user->getUserData($update->userID,'name', TRUE); ?> <?php $user->getUserData($update->userID,'surname', TRUE); ?></a></h4>
+			<p class="metadata"><a href="/profile/<?php $user->getUserData($update->userID,'username', TRUE); ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->updateTimeSince($update->timestamp); ?></a></p>
 		</header>
 		<?php echo $update->message; ?>
 		<footer class="update-footer">

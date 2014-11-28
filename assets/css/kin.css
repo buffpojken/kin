@@ -17,6 +17,9 @@ body #site-body form#post-update {
   padding-bottom: 20px;
   border-bottom: 1px solid #eaeaea;
 }
+body #site-body form#post-update textarea#statusUpdate {
+  height: 30px;
+}
 body #site-body ul#updates {
   list-style: none;
   margin: 0;
@@ -33,7 +36,10 @@ body #site-body ul#updates li.update header.update-header h4 {
   margin: 0;
   padding: 0;
 }
-body #site-body ul#updates li.update header.update-header p.metadata {
+body #site-body ul#updates li.update header.update-header h4 a {
+  color: #111111;
+}
+body #site-body ul#updates li.update header.update-header p.metadata a {
   color: #9d9d9d;
 }
 body #site-body ul#updates li.update footer.update-footer {

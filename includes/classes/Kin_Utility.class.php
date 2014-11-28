@@ -16,12 +16,12 @@ class Kin_Utility {
 			$format .= '%d days, ';
 		}
 		if( $interval->h != 0 ) {
-			$format .= '%h hours ';
+			$format .= '%h hrs ';
 		}
 		if( $interval->h != 0 && $interval->i != 0 ) {
-			$format .= 'and %i minutes ago';
+			$format .= 'and %i mins ago';
 		} elseif( $interval->i != 0 ) {
-			$format .= '%i minutes ago';
+			$format .= '%i mins ago';
 		}
 		echo $interval->format( $format );
 	}

@@ -3,9 +3,13 @@ $(document).ready( function(){
 		$(this).animate({
 			height: 100
 		}, "normal");
-	}).blur(function() {
-		$(this).animate({
-			height: 51
-		}, "normal");
+	});
+	$('textarea#statusUpdate').blur(function() {
+		var count = $(this).val().length;
+		if( count == 0 ) {
+			$(this).animate({
+				height: 30
+			}, "normal");
+		}
 	});
 });

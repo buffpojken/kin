@@ -1,1 +1,1 @@
-$(document).ready(function(){$("textarea#statusUpdate").focus(function(){$(this).animate({height:100},"normal")}).blur(function(){$(this).animate({height:51},"normal")})});
+$(document).ready(function(){$("textarea#statusUpdate").focus(function(){$(this).animate({height:100},"normal")}),$("textarea#statusUpdate").blur(function(){var t=$(this).val().length;0==t&&$(this).animate({height:30},"normal")})});
