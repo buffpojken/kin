@@ -1,3 +1,42 @@
+<?php
+if( isset( $_GET['path_section'] ) ) {
+	if( !$user->profileExists($_GET['path_section']) ) {
+		HEADER('Location: /');
+		exit;
+	} else {
+		$profile = new Kin_User($_GET['path_section']);		
+	?>
+	<div id="profileCard" class="well well-sm">
+		<img src="/uploads/avatars/<?php echo $profile->userID; ?>-150x150.jpg" class="portrait pull-left" />
+		<h1><?php echo $profile->name . ' ' . $profile->surname; ?></h1>
+		<div class="clearfix"></div>
+	</div>
+	<ul id="updates">
+	<?php
+	$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE userID = '{$profile->userID}' ORDER BY id DESC LIMIT 15" );
+	foreach( $updates as $update ) {
+		$data = new Kin_Updates($update->id);
+		$author = new Kin_User($data->userID);
+	?>
+		<li class="update" data-update-id="<?php echo $data->id; ?>">
+			<header class="update-header">
+				<img src="/uploads/avatars/<?php echo $data->userID; ?>-40x40.jpg" class="portrait" />
+				<h4><a href="/profile/<?php echo $author->username; ?>"><?php echo $author->name; ?> <?php echo $author->surname; ?></a></h4>
+				<p class="metadata"><a href="/profile/<?php echo $auhtor->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
+			</header>
+			<?php echo $data->message; ?><br />
+			<footer class="update-footer">
+				<p>
+					<a href="#" class="likeUpdate" id="like-<?php echo $data->id; ?>" data-id="<?php echo $data->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($data->updateID) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
+					<a href="#">Comment</a>
+					<span class="likes-wrapper"></span>
+				</p>
+			</footer>
+		</li>
+	<?php } ?>
+	</ul>
+	<?php }
+} else { ?>
 <div class="page-header">
 	<h1>Profile</h1>
 </div>
@@ -7,21 +46,20 @@ if( isset( $_POST['action'] ) && $_POST['action']=='updatePassword' ) {
 }
 if( isset( $_POST['action'] ) && $_POST['action']=='updateProfile' ) {
 	$user->updateProfile($_POST,$_FILES['profile_portrait']);
-}
-?>
+} ?>
 <form class="form-horizontal" role="form" method="post" action="" enctype="multipart/form-data">
 	<fieldset>
 		<legend>Core information</legend>
 		<div class="form-group">
 			<label for="profile_name" class="col-sm-3 control-label">Name</label>
 			<div class="col-sm-9">
-				<input type="text" class="form-control" id="profile_name" name="profile_name" value="<?php $user->getUserData($_SESSION["userID"],'name', TRUE); ?>" />
+				<input type="text" class="form-control" id="profile_name" name="profile_name" value="<?php echo $user->name; ?>" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="profile_surname" class="col-sm-3 control-label">Surname</label>
 			<div class="col-sm-9">
-				<input type="text" class="form-control" id="profile_surname" name="profile_surname" value="<?php $user->getUserData($_SESSION["userID"],'surname', TRUE); ?>" />
+				<input type="text" class="form-control" id="profile_surname" name="profile_surname" value="<?php echo $user->surname; ?>" />
 			</div>
 		</div>
 	</fieldset>
@@ -39,13 +77,13 @@ if( isset( $_POST['action'] ) && $_POST['action']=='updateProfile' ) {
 		<div class="form-group">
 			<label for="profile_username" class="col-sm-3 control-label">Username</label>
 			<div class="col-sm-9">
-				<input type="text" class="form-control" id="profile_username" name="profile_username" placeholder="<?php $user->getUserData($_SESSION["userID"],'username', TRUE); ?>" disabled="disabled" />
+				<input type="text" class="form-control" id="profile_username" name="profile_username" placeholder="<?php echo $user->username; ?>" disabled="disabled" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="profile_email" class="col-sm-3 control-label">Email</label>
 			<div class="col-sm-9">
-				<input type="email" class="form-control" id="profile_email" name="profile_email" value="<?php $user->getUserData($_SESSION["userID"],'email', TRUE); ?>" />
+				<input type="email" class="form-control" id="profile_email" name="profile_email" value="<?php echo $user->email; ?>" />
 			</div>
 		</div>
 	</fieldset>
@@ -88,3 +126,4 @@ if( isset( $_POST['action'] ) && $_POST['action']=='updateProfile' ) {
 	</div>
 	<input type="hidden" name="action" value="updatePassword" />
 </form>
+<?php } ?>

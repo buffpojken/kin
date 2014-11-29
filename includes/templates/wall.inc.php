@@ -12,17 +12,19 @@
 <?php
 $updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC LIMIT 15" );
 foreach( $updates as $update ) {
-?>
-	<li class="update" data-update-id="<?php echo $update->id; ?>">
+	$data = new Kin_Updates($update->id);
+	$author = new Kin_User($data->userID);
+	?>
+	<li class="update" data-update-id="<?php echo $data->id; ?>">
 		<header class="update-header">
-			<img src="/uploads/avatars/<?php echo $_SESSION['userID']; ?>-40x40.jpg" class="portrait" />
-			<h4><a href="/profile/<?php $user->getUserData($update->userID,'username', TRUE); ?>"><?php $user->getUserData($update->userID,'name', TRUE); ?> <?php $user->getUserData($update->userID,'surname', TRUE); ?></a></h4>
-			<p class="metadata"><a href="/profile/<?php $user->getUserData($update->userID,'username', TRUE); ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($update->timestamp); ?></a></p>
+			<img src="/uploads/avatars/<?php echo $data->userID; ?>-40x40.jpg" class="portrait" />
+			<h4><a href="/profile/<?php echo $author->username; ?>"><?php echo $author->name; ?> <?php echo $author->surname; ?></a></h4>
+			<p class="metadata"><a href="/profile/<?php echo $auhtor->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
 		</header>
-		<?php echo $update->message; ?><br />
+		<?php echo $data->message; ?><br />
 		<footer class="update-footer">
 			<p>
-				<a href="#" class="likeUpdate" id="like-<?php echo $update->id; ?>" data-id="<?php echo $update->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($update->id) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
+				<a href="#" class="likeUpdate" id="like-<?php echo $data->id; ?>" data-id="<?php echo $data->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($data->updateID) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
 				<a href="#">Comment</a>
 				<span class="likes-wrapper"></span>
 			</p>

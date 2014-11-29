@@ -1,6 +1,14 @@
 <?php
 class Kin_Utility {
 	
+	public function bodyClass( $classes=NULL ) {
+		if( isset( $_GET['path_page'] ) ) { 
+			echo ' class="'.$_GET['path_page'].'"'; 
+		} else { 
+			echo ' class="home"'; 
+		}
+	}
+	
 	public function hasCurrentUserLikedThis($updateID) {
 		global $db;
 		$updateID = $db->escape($updateID);

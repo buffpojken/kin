@@ -14,7 +14,7 @@
 		<script src="/assets/js/bootstrap.min.js" charset="utf-8"></script>
 		<script src="/assets/js/kin.js" charset="utf-8"></script>
 	</head>
-	<body>
+	<body<?php $utility->bodyClass(); ?>>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 			<?php if( isset( $_SESSION["userID"] ) ) { ?>

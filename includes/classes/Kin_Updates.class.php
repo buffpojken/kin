@@ -1,5 +1,27 @@
 <?php
-class Kin_Update {
+class Kin_Updates {
+	
+	var $updateID;
+	var $userID;
+	var $timestamp;
+	var $message;
+	var $likeCount;
+	var $commentCount;
+	
+	function __construct($updateIdentifier) {
+		global $db;
+		$updateIdentifier = $db->escape($updateIdentifier);
+		$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."updates WHERE id = '{$updateIdentifier}'");
+		$likeCount = $db->get_var("SELECT COUNT(id) as cnt FROM ".DB_TABLE_PREFIX."likes WHERE updateID = '{$data->id}'");
+		$commentCount = $db->get_var("SELECT COUNT(id) as cnt FROM ".DB_TABLE_PREFIX."comments WHERE updateID = '{$data->id}'");
+		$this->updateID = $data->id;
+		$this->userID = $data->userID;
+		$this->timestamp = $data->timestamp;
+		$this->message = $data->message;
+		$this->likeCount = $data->likeCount;
+		$this->commentCount = $data->commentCount;
+		return $this;
+	}
 	
 	public function hasCurrentUserLikedThis($updateID) {
 		global $db;

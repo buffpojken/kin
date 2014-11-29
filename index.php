@@ -3,7 +3,6 @@ session_start();
 ob_start();
 require_once('config.inc.php');
 require_once( GLOBALS_PATH . '/ajax.inc.php' );
-require_once( GLOBALS_PATH . '/header.inc.php' );
 if( !isset( $_SESSION['userID'] ) && isset( $_COOKIE['kin_social_login'] ) ) {
 	$userHash = $db->escape( $_COOKIE['kin_social_login'] );
 	$userID = $db->get_var( "SELECT id FROM ".DB_TABLE_PREFIX."users WHERE userHash = '{$userHash}'" );
@@ -13,11 +12,16 @@ if( !isset( $_SESSION['userID'] ) && isset( $_COOKIE['kin_social_login'] ) ) {
 		HEADER('Location: /');
 	}
 }
+if( isset( $_SESSION['userID'] ) ) {
+	$user = new Kin_User( $_SESSION['userID'] );
+}
 if( $_GET['action'] == 'logout' ) {
 	session_destroy();
 	setcookie ( 'kin_social_login', '', time() - 60 * 60 * 24 * 14 );
 	HEADER('Location: /');
 }
+
+require_once( GLOBALS_PATH . '/header.inc.php' );
 ?>
 		
 		<div id="site-body" class="container">

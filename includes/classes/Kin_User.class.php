@@ -1,6 +1,30 @@
 <?php 
 class Kin_User {
 	
+	var $userID;
+	var $name;
+	var $surname;
+	var $username;
+	var $email;
+	var $siteAdmin;
+	
+	function __construct($userIdentificer) {
+		global $db;
+		$userIdentifier = $db->escape($userIdentifier);
+		if( is_numeric( $userIdentificer ) ) {
+			$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE id = '{$userIdentificer}'");
+		} else {
+			$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE username = '{$userIdentificer}'");
+		}
+		$this->userID = $data->id;
+		$this->name = $data->name;
+		$this->surname = $data->surname;
+		$this->username = $data->username;
+		$this->email = $data->email;
+		$this->siteAdmin = $data->sideAdmin;
+		return $this;
+	}
+	
 	public function authorize($email, $password, $cookie) {
 		
 		global $db;
@@ -163,6 +187,17 @@ class Kin_User {
 			echo $userData;
 		} else {
 			return $userData;
+		}
+	}
+	
+	public function profileExists($username) {
+		global $db;
+		$username = $db->escape($username);
+		$result = $db->get_var("SELECT id FROM ".DB_TABLE_PREFIX."users WHERE username = '{$username}'");
+		if( $result ) {
+			return TRUE;
+		} else {
+			return FALSE;
 		}
 	}
 
