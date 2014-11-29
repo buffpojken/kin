@@ -26,7 +26,7 @@ $(document).ready( function(){
 			});
 			
 			request.done(function (response, textStatus, jqXHR){
-				//console.log( 'The following message returned: '+ textStatus + ' / ', response );
+				console.log( 'The following message returned: '+ textStatus + ' / ', response );
 				$('a.likeUpdate#'+$identifier).text('Like');
 			});
 			

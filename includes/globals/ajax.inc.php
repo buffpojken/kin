@@ -31,8 +31,7 @@ if( isset( $_SESSION['userID'] ) && isset( $_POST['action'] ) && isset( $_POST['
 		break;
 		case 'unlikeUpdate':
 			$updateID = $db->escape( $_POST['updateID'] );
-			$db->query("DELETE FROM ".DB_TABLE_PREFIX."likes WHERE userID = '{$_SESSION['userID']}' AND updateID='{$updateID}')");
-			$db->debug();
+			$db->query("DELETE FROM ".DB_TABLE_PREFIX."likes WHERE userID = '{$_SESSION['userID']}' AND updateID='{$updateID}'");
 		break;
 	}	
 	exit;

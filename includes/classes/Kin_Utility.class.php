@@ -1,6 +1,17 @@
 <?php
 class Kin_Utility {
 	
+	public function hasCurrentUserLikedThis($updateID) {
+		global $db;
+		$updateID = $db->escape($updateID);
+		$result = $db->get_var("SELECT id FROM ".DB_TABLE_PREFIX."likes WHERE userID ='{$_SESSION['userID']}' AND updateID = '{$updateID}'");
+		if( $result ) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+	
 	public function timeSince($timestamp,$echo=TRUE) {
 		$date = new DateTime();
 		$date->setTimestamp(strtotime($timestamp));
@@ -44,13 +55,6 @@ class Kin_Utility {
 				$format .= '%i min ago';
 			} else {
 				$format .= '%i mins ago';
-			}
-		}
-		if( $interval->s != 0 ) {
-			if( $interval->i == 1 ) {
-				$format .= ' and %s second ago';
-			} else {
-				$format .= ' and %s seconds ago';
 			}
 		}
 		if( $echo ) {
