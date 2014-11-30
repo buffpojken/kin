@@ -26,7 +26,7 @@ foreach( $updates as $update ) {
 			<p>
 				<a href="#" class="likeUpdate" id="like-<?php echo $data->id; ?>" data-id="<?php echo $data->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($data->updateID) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
 				<a href="#">Comment</a>
-				<span class="likes-wrapper"></span>
+				<span class="likes-description"><?php $data->likeDescriptionOutput($update->id); ?></span>
 			</p>
 		</footer>
 	</li>

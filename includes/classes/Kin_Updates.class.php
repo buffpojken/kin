@@ -23,7 +23,7 @@ class Kin_Updates {
 		return $this;
 	}
 	
-	public function hasCurrentUserLikedThis($updateID) {
+	public function hasCurrentUserLikedThis( $updateID ) {
 		global $db;
 		$userID = $db->escape($_SESSION['userID']);
 		$updateID = $db->escape($updateID);
@@ -32,6 +32,29 @@ class Kin_Updates {
 			return TRUE;
 		} else {
 			return FALSE;
+		}
+	}
+	
+	public function likeDescriptionOutput( $updateID ) {
+		global $db;
+		$updateID = $db->escape( $updateID );
+		$likes = $db->get_col( "SELECT userID FROM ".DB_TABLE_PREFIX."likes WHERE updateID = '{$updateID}'" );
+		$likeCount = count($likes);
+		$output .= ' · ';
+		if( $likeCount == 1 ) {
+			if( in_array( $_SESSION['userID'], $likes ) ) {
+				$output .= 'You like this';
+			} else {
+				$output .= '1 person likes this.';
+			}
+			echo $output;
+		} elseif( $likeCount > 1 ) {
+			if( in_array( $_SESSION['userID'], $likes ) ) {
+				$output .= 'You and ' . $likeCount - 1 . ' others like this';
+			} else {
+				$output .= $likeCount . ' person likes this.';
+			}
+			echo $output;
 		}
 	}
 	
