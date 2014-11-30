@@ -21,7 +21,7 @@ class Kin_User {
 		$this->surname = $data->surname;
 		$this->username = $data->username;
 		$this->email = $data->email;
-		$this->siteAdmin = $data->sideAdmin;
+		$this->siteAdmin = $data->siteAdmin;
 		return $this;
 	}
 	
