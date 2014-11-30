@@ -14,10 +14,14 @@ if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 <div class="page-header">
 	<h1>Notifications</h1>
 </div>
-
+<?php if( isset( $_POST['action'] ) && $_POST['action']=='bulkEditNotifications' ) {
+	foreach( $_POST['notifications'] as $notification ) {
+		$notifications->markNotificationAsRead($notification);
+	}
+} ?>
 <h3>Unread</h3>
 <?php if( $notificationsData = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."notifications WHERE recipientID ='{$_SESSION['userID']}' AND isRead='0'" ) ) { ?>
-<form role="form">
+<form role="form" method="post" action="">
 	<table class="table table-bordered table-condensed">
 		<thead>
 			<tr>
@@ -29,14 +33,15 @@ if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 		<tbody>
 		<?php foreach( $notificationsData as $notificationData ) {
 			echo '<tr>';
-			echo '<td><input type="checkbox" name="notification[]" value="'.$notificationData->id.'" /></td>';
-			echo '<td><span class="label label-default">'.$notificationData->timestamp.'</span></td>';
+			echo '<td><input type="checkbox" name="notifications[]" value="'.$notificationData->id.'" /></td>';
+			echo '<td><span class="label label-default">'.$utility->timeSince($notificationData->timestamp, FALSE).'</span></td>';
 			echo '<td><a href="/notifications/redirect/'.$notificationData->id.'">'.$notificationData->message.'</a></td>';
 			echo '<tr>';
 		} ?>
 		</tbody>
 	</table>
-	<button type="button" class="btn btn-default btn-xs">Set marked as read</button>
+	<button type="submit" class="btn btn-default btn-xs">Set marked as read</button>
+	<input type="hidden" name="action" value="bulkEditNotifications" />
 </form>
 <?php } else {
 	echo '<p class="text-center">You have no unread notifications.</p>';
@@ -49,7 +54,6 @@ if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 <table class="table table-bordered table-condensed">
 	<thead>
 		<tr>
-			<th></th>
 			<th>When</th>
 			<th>Message</th>
 		</tr>
@@ -57,8 +61,7 @@ if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 	<tbody>
 	<?php foreach( $notificationsData as $notificationData ) {
 		echo '<tr>';
-		echo '<td><input type="checkbox" name="notification[]" value="'.$notificationData->id.'" /></td>';
-		echo '<td><span class="label label-default">'.$notificationData->timestamp.'</span></td>';
+		echo '<td><span class="label label-default">'.$utility->timeSince($notificationData->timestamp, FALSE).'</span></td>';
 		echo '<td>'.$notificationData->message.'</td>';
 		echo '<tr>';
 	} ?>
