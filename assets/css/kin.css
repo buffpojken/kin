@@ -51,6 +51,9 @@ body #site-body ul#updates li.update footer.update-footer {
   margin-top: 10px;
   font-size: .9em;
 }
+body #site-body ul#updates li.update footer.update-footer span.like-description {
+  color: #9d9d9d;
+}
 body #site-body ul#users {
   list-style: none;
   margin: 0;

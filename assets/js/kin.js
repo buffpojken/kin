@@ -13,6 +13,7 @@ $(document).ready( function(){
 			request.done(function (response, textStatus, jqXHR){
 				//console.log( 'The following message returned: '+ textStatus + ' / ', response );
 				$('a.likeUpdate#'+$identifier).text('Unlike');
+				$('a.likeUpdate#'+$identifier).siblings('span.like-description').text(' · You like this');
 			});
 			
 			request.fail(function (jqXHR, textStatus, errorThrown){
