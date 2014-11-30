@@ -9,9 +9,9 @@ if( isset( $_GET['path_section'] ) ) {
 	<div id="profileCard" class="well well-sm">
 		<img src="/uploads/avatars/<?php echo $profile->userID; ?>-150x150.jpg" class="portrait pull-left" />
 		<h1><?php echo $profile->name . ' ' . $profile->surname; ?></h1>
-		<?php if( $profile->isCurrentUserFriendsWithThisProfile($profile->userID) ) { ?>
+		<?php if( $profile->isCurrentUserFriendsWithThisProfile($profile->userID) && $profile->userID != $_SESSION['userID'] ) { ?>
 		<p>You already friends. <a href="#">Unfriend?</a></p>
-		<?php } else { ?>
+		<?php } elseif( $profile->userID != $_SESSION['userID'] ) { ?>
 		<p>You're not friends. <a href="#">Send friend request?</a></p>
 		<?php } ?>
 		<div class="clearfix"></div>
