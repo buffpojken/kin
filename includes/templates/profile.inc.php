@@ -5,45 +5,82 @@ if( isset( $_GET['path_section'] ) ) {
 		exit;
 	} else {
 		$profile = new Kin_User($_GET['path_section']);		
-	?>
-	<div id="profileCard" class="well well-sm">
-		<img src="/uploads/avatars/<?php echo $profile->userID; ?>-150x150.jpg" class="portrait pull-left" />
-		<h1><?php echo $profile->name . ' ' . $profile->surname; ?></h1>
-		<?php if( $profile->isCurrentUserFriendsWithThisProfile($profile->userID) && $profile->userID != $_SESSION['userID'] ) { ?>
-		<p>You already friends. <a href="#">Unfriend?</a></p>
-		<?php } elseif( $profile->userID != $_SESSION['userID'] ) { ?>
-		<p>You're not friends. <a href="#">Send friend request?</a></p>
-		<?php } ?>
-		<div class="clearfix"></div>
-	</div>
-	<ul id="updates">
-	<?php
-	if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE userID = '{$profile->userID}' ORDER BY id DESC LIMIT 15" ) ) {
-		foreach( $updates as $update ) {
-			$data = new Kin_Updates($update->id);
-			$author = new Kin_User($data->userID);
-			?>
-			<li class="update" data-update-id="<?php echo $update->id; ?>">
-				<header class="update-header">
-					<img src="/uploads/avatars/<?php echo $data->userID; ?>-40x40.jpg" class="portrait" />
-					<h4><a href="/profile/<?php echo $author->username; ?>"><?php echo $author->name; ?> <?php echo $author->surname; ?></a></h4>
-					<p class="metadata"><a href="/profile/<?php echo $author->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
-				</header>
-				<?php echo $data->message; ?><br />
-				<footer class="update-footer">
-					<p>
-						<a href="#" class="likeUpdate" id="like-<?php echo $update->id; ?>" data-id="<?php echo $update->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($data->updateID) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
-						<a href="#">Comment</a>
-						<span class="like-description"><?php $data->likeDescriptionOutput($update->id); ?></span>
-					</p>
-				</footer>
-			</li>
+		?>
+		<div id="profileCard" class="well well-sm">
+			<img src="/uploads/avatars/<?php echo $profile->userID; ?>-150x150.jpg" class="portrait pull-left" />
+			<h1><?php echo $profile->name . ' ' . $profile->surname; ?></h1>
+			<?php if( $profile->isCurrentUserFriendsWithThisProfile($profile->userID) && $profile->userID != $_SESSION['userID'] ) { ?>
+			<p>You already friends. <a href="#">Unfriend?</a></p>
+			<?php } elseif( $profile->userID != $_SESSION['userID'] ) { ?>
+			<p>You're not friends. <a href="#">Send friend request?</a></p>
+			<?php } ?>
+			<div class="clearfix"></div>
+		</div> 
+		
+		<?php if( isset( $_GET['path_item'] ) ) {
+			if( $_GET['path_item']=='updates' && is_numeric( $_GET['path_action'] ) ) { ?>
+		<ul id="updates">
+		<?php
+		if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE id = '{$_GET['path_action']}' LIMIT 1" ) ) {
+			foreach( $updates as $update ) {
+				$data = new Kin_Updates($update->id);
+				$author = new Kin_User($data->userID);
+				?>
+				<li class="update" data-update-id="<?php echo $update->id; ?>">
+					<header class="update-header">
+						<img src="/uploads/avatars/<?php echo $data->userID; ?>-40x40.jpg" class="portrait" />
+						<h4><a href="/profile/<?php echo $author->username; ?>"><?php echo $author->name; ?> <?php echo $author->surname; ?></a></h4>
+						<p class="metadata"><a href="/profile/<?php echo $author->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
+					</header>
+					<?php echo $data->message; ?><br />
+					<footer class="update-footer">
+						<p>
+							<a href="#" class="likeUpdate" id="like-<?php echo $update->id; ?>" data-id="<?php echo $update->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($data->updateID) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
+							<a href="#">Comment</a>
+							<span class="like-description"><?php $data->likeDescriptionOutput($update->id); ?></span>
+						</p>
+					</footer>
+				</li>
+			<?php }
+		} else {
+			echo '<li class="no-updates">Sadly, '.$profile->name.' hasn\'t posted any updates yet.</li>';
+		} ?>
+		</ul>
+			<?php } else {
+				HEADER('Location: /');
+				exit;
+			}
+		} else { ?>
+			
+		<ul id="updates">
+		<?php
+		if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE userID = '{$profile->userID}' ORDER BY id DESC LIMIT 15" ) ) {
+			foreach( $updates as $update ) {
+				$data = new Kin_Updates($update->id);
+				$author = new Kin_User($data->userID);
+				?>
+				<li class="update" data-update-id="<?php echo $update->id; ?>">
+					<header class="update-header">
+						<img src="/uploads/avatars/<?php echo $data->userID; ?>-40x40.jpg" class="portrait" />
+						<h4><a href="/profile/<?php echo $author->username; ?>"><?php echo $author->name; ?> <?php echo $author->surname; ?></a></h4>
+						<p class="metadata"><a href="/profile/<?php echo $author->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
+					</header>
+					<?php echo $data->message; ?><br />
+					<footer class="update-footer">
+						<p>
+							<a href="#" class="likeUpdate" id="like-<?php echo $update->id; ?>" data-id="<?php echo $update->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($data->updateID) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
+							<a href="#">Comment</a>
+							<span class="like-description"><?php $data->likeDescriptionOutput($update->id); ?></span>
+						</p>
+					</footer>
+				</li>
+			<?php }
+		} else {
+			echo '<li class="no-updates">Sadly, '.$profile->name.' hasn\'t posted any updates yet.</li>';
+		} ?>
+		</ul>
 		<?php }
-	} else {
-		echo '<li class="no-updates">Sadly, '.$profile->name.' hasn\'t posted any updates yet.</li>';
-	} ?>
-	</ul>
-	<?php }
+	}
 } else { ?>
 <div class="page-header">
 	<h1>Profile</h1>
