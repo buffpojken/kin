@@ -57,21 +57,21 @@ body #site-body ul#users {
   padding: 0;
 }
 body #site-body ul#users li.user {
-  background-color: #eaeaea;
-  padding: 10px;
+  text-align: center;
 }
-body #site-body ul#users li.user h4 {
+body #site-body ul#users li.user a {
+  color: #111111;
+}
+body #site-body ul#users li.user a h4 {
+  display: block;
   margin: 0;
   padding: 0;
 }
-body #site-body ul#users li.user h4 a {
-  color: #111111;
-}
-body #site-body ul#users li.user img.portrait {
+body #site-body ul#users li.user a img.portrait {
   width: 75px;
-  margin-right: 10px;
+  margin: 0 0 10px;
   height: auto;
-  float: left;
+  border-radius: 75px;
 }
 body #sidebar {
   padding-top: 10px;

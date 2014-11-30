@@ -3,7 +3,7 @@
 		<label for="statusUpdate">So ... what are you up to?</label>
 		<textarea class="form-control" name="statusUpdate" id="statusUpdate" class="" rows="1"></textarea>
 	</div>
-	<button type="submit" class="btn btn-default">Post</button>
+	<button type="submit" class="btn btn-default btn-xs">Post</button>
 	<input type="hidden" name="action" value="postUpdate" />
 	<input type="hidden" name="ajax" value="1" />
 </form>
@@ -19,7 +19,7 @@ foreach( $updates as $update ) {
 		<header class="update-header">
 			<img src="/uploads/avatars/<?php echo $data->userID; ?>-40x40.jpg" class="portrait" />
 			<h4><a href="/profile/<?php echo $author->username; ?>"><?php echo $author->name; ?> <?php echo $author->surname; ?></a></h4>
-			<p class="metadata"><a href="/profile/<?php echo $auhtor->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
+			<p class="metadata"><a href="/profile/<?php echo $author->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
 		</header>
 		<?php echo $data->message; ?><br />
 		<footer class="update-footer">

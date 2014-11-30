@@ -33,24 +33,9 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li<?php if( $_GET['path_page']=='' ) { echo ' class="active"'; } ?>><a href="/">Wall</a></li>
-						<!--<li<?php if( $_GET['path_page'] =='messages' ) { echo ' class="active"'; } ?>><a href="/messages">Messages</a></li>-->
+						<!--<li<?php if( $_GET['path_page'] =='messages' ) { echo ' class="active"'; } ?>><a href="/messages">Messages <span class="badge">42</span></a></li>-->
 						<li<?php if( $_GET['path_page'] =='friends' ) { echo ' class="active"'; } ?>><a href="/friends">Friends</a></li>
 						<!--<li<?php if( $_GET['path_page'] =='notifications' ) { echo ' class="active"'; } ?>><a href="/notifications">Notifications</a></li>-->
-					</ul>
-					
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, <?php $user->getUserData($_SESSION["userID"],'name', TRUE); ?> <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="/profile">Profile</a></li>
-								<?php if( $user->getUserData($_SESSION["userID"],'siteAdmin') == 1 ) { ?>
-								<li class="divider"></li>
-								<li><a href="/administration">Administration</a></li>	
-								<?php } ?>
-								<li class="divider"></li>
-								<li><a href="?action=logout">Sign out</a></li>
-							</ul>
-						</li>
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			<?php } else { ?>

@@ -31,7 +31,8 @@ class Kin_User {
 		$email = $db->escape($email);
 		$hashedPassword = sha1( $password . ENCRYPTION_SALT );
 		
-		$userID = $db->get_var( "SELECT id FROM ".DB_TABLE_PREFIX."users WHERE email = '{$email}'" );
+		$userID = $db->get_var( "SELECT id FROM ".DB_TABLE_PREFIX."users WHERE email = '{$email}' AND passwordResetHash = '0'" );
+		$db->debug();
 		if( !is_numeric( $userID ) ) {
 			$errors['db_info'] = "We were unable to find any user with that combination of email and password. Please try again.";
 		}
