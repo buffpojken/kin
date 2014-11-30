@@ -19,7 +19,7 @@ $(document).ready( function(){
 			request.fail(function (jqXHR, textStatus, errorThrown){
 				console.error( 'The following error occurred: '+ textStatus, errorThrown );
 			});
-		} else {
+		} else if( $text == 'Unlike' ) {
 			request = $.ajax({
 				url: '/',
 				type: 'post',
@@ -29,6 +29,7 @@ $(document).ready( function(){
 			request.done(function (response, textStatus, jqXHR){
 				console.log( 'The following message returned: '+ textStatus + ' / ', response );
 				$('a.likeUpdate#'+$identifier).text('Like');
+				$('a.likeUpdate#'+$identifier).siblings('span.like-description').empty();
 			});
 			
 			request.fail(function (jqXHR, textStatus, errorThrown){
