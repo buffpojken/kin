@@ -15,12 +15,6 @@ if( !isset( $_SESSION['userID'] ) && isset( $_COOKIE['kin_social_login'] ) ) {
 if( isset( $_SESSION['userID'] ) ) {
 	$user = new Kin_User( $_SESSION['userID'] );
 }
-/*if( $_GET['action'] == 'logout' ) {
-	session_destroy();
-	setcookie ( 'kin_social_login', '', time() - 60 * 60 * 24 * 14 );
-	HEADER('Location: /');
-}*/
-
 require_once( GLOBALS_PATH . '/header.inc.php' );
 ?>
 		

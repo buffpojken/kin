@@ -6,13 +6,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Kin</title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="/assets/css/bootstrap.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
 		<link rel="stylesheet" href="/assets/css/kin.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
 		<!-- JS -->
 		<!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
 		<script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
 		<script src="/assets/js/bootstrap.min.js" charset="utf-8"></script>
-		<script src="/assets/js/kin.js" charset="utf-8"></script>
+		<script src="/assets/js/min/kin-min.js" charset="utf-8"></script>
 	</head>
 	<body<?php $utility->bodyClass(); ?>>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
