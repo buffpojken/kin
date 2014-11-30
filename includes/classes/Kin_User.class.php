@@ -8,7 +8,7 @@ class Kin_User {
 	var $email;
 	var $siteAdmin;
 	
-	function __construct($userIdentificer) {
+	function __construct($userIdentificer=FALSE) {
 		global $db;
 		$userIdentifier = $db->escape($userIdentifier);
 		if( is_numeric( $userIdentificer ) ) {
@@ -96,6 +96,14 @@ class Kin_User {
 			}
 			echo '</ul></div>';
 		}
+	}
+	
+	public function startPasswordReset( $email ) {
+		global $db;
+		$email = $db->escape($email);
+		$resetHash = sha1(time());
+		$db->query( "UPDATE ".DB_TABLE_PREFIX."users SET passwordResetHash='{$resetHash}' WHERE email ='{$email}'" );
+		#$db->debug();
 	}
 	
 	public function updateProfile( $data, $portrait ) {

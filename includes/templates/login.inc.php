@@ -6,6 +6,10 @@
 		$user = new Kin_User();
 		$user->authorize( $_POST['login_email'], $_POST['login_password'], $_POST['login_cookie'] );
 		
+	}
+	if( isset( $_POST['action'] ) && $_POST['action']=='startPasswordReset' ) {
+		$user = new Kin_User();
+		$user->startPasswordReset( $_POST['reset_email'] );
 	} ?>
 	<div class="form-group">
 		<label for="login_email">Email address</label>
@@ -26,7 +30,7 @@
 </form>
 
 <div class="modal fade" id="passwordResetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<form class="modal-dialog">
+	<form class="modal-dialog" method="post" action="">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
