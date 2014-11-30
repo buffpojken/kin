@@ -16,6 +16,12 @@ class Kin_Notification {
 		return $count;
 	}
 	
+	public function markNotificationAsRead( $notificationID ) {
+		global $db;
+		$notificationID = $db->escape($notificationID);
+		$db->query( "UPDATE ".DB_TABLE_PREFIX."notifications SET isRead='1' WHERE id='{$notificationID}'" );
+	}
+	
 	public function getLink( $recipientID, $notificationID ) {
 		global $db;
 		$recipientID = $db->escape($recipientID);

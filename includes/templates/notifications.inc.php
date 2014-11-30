@@ -2,6 +2,7 @@
 if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 	if( is_numeric( $_GET['path_item'] ) ) {
 		$link = $notifications->getLink( $_SESSION['userID'], $_GET['path_item'] );
+		$notifications->markNotificationAsRead($_GET['path_item']);
 		HEADER('Location: ' . $link);
 		exit;
 	} else {
