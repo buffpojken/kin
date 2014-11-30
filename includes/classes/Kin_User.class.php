@@ -201,5 +201,16 @@ class Kin_User {
 			return FALSE;
 		}
 	}
+	
+	public function isCurrentUserFriendsWithThisProfile($profileID) {
+		global $db;
+		$profileID = $db->escape($profileID);
+		$result = $db->get_var( "SELECT id FROM ".DB_TABLE_PREFIX."friendships WHERE userID = '{$_SESSION['userID']}' AND friendID = '{$profileID}'" );
+		if( count($result)==0 ) {
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
 
 }
