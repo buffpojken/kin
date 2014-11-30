@@ -10,7 +10,7 @@
 
 <ul id="updates">
 <?php
-$updates = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC LIMIT 15" );
+$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC LIMIT 15" );
 foreach( $updates as $update ) {
 	$data = new Kin_Updates($update->id);
 	$author = new Kin_User($data->userID);

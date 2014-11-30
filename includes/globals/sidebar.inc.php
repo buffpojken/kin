@@ -8,6 +8,6 @@
 	<?php } ?>
 	<p class="copyright">
 		Proudly powered by <a href="#">Kin</a>.<br />
-		Version <?php echo(KIN_VERSION); ?>
+		Version <?php echo KIN_VERSION; ?>
 	</p>
 </div>
