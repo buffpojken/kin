@@ -7,7 +7,9 @@
 </div>
 
 
-<?php if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE message LIKE '%#{$_GET['path_section']}%' ORDER BY id DESC LIMIT 25" ) ) { ?>
+<?php 
+$hashtag = $db->escape( $_GET['path_section'] ); 
+if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE message LIKE '%#{$hashtag}%' ORDER BY id DESC LIMIT 25" ) ) { ?>
 	<p>There are <strong><?php echo count($updates); ?></strong> posts with the <strong>#<?php echo $_GET['path_section']; ?></strong> hashtag.</p>
 	<ul id="updates">
 	<?php foreach( $updates as $update ) {
