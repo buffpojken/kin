@@ -62,7 +62,7 @@ if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 	<?php foreach( $notificationsData as $notificationData ) {
 		echo '<tr>';
 		echo '<td><span class="label label-default">'.$utility->timeSince($notificationData->timestamp, FALSE).'</span></td>';
-		echo '<td>'.$notificationData->message.'</td>';
+		echo '<td><a href="/notifications/redirect/'.$notificationData->id.'">'.$notificationData->message.'</a></td>';
 		echo '<tr>';
 	} ?>
 	</tbody>
