@@ -20,7 +20,7 @@ if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 	}
 } ?>
 <h3>Unread</h3>
-<?php if( $notificationsData = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."notifications WHERE recipientID ='{$_SESSION['userID']}' AND isRead='0'" ) ) { ?>
+<?php if( $notificationsData = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."notifications WHERE recipientID ='{$_SESSION['userID']}' AND isRead='0' ORDER BY timestamp ASC" ) ) { ?>
 <form role="form" method="post" action="">
 	<table class="table table-bordered table-condensed">
 		<thead>
@@ -50,7 +50,7 @@ if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 <hr />
 
 <h3>Read</h3>
-<?php if( $notificationsData = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."notifications WHERE recipientID ='{$_SESSION['userID']}' AND isRead='1'" ) ) { ?>
+<?php if( $notificationsData = $db->get_results( "SELECT * FROM ".DB_TABLE_PREFIX."notifications WHERE recipientID ='{$_SESSION['userID']}' AND isRead='1' ORDER BY timestamp DESC" ) ) { ?>
 <table class="table table-bordered table-condensed">
 	<thead>
 		<tr>
