@@ -3,15 +3,14 @@
 </div>
 <ul class="row" id="users">
 <?php 
-if( $friendIDs = $db->get_col( "SELECT friendID FROM ".DB_TABLE_PREFIX."friendships WHERE userID = '{$_SESSION['userID']}'" ) ) {
-	$otherFriendIDs = $db->get_col( "SELECT userID FROM ".DB_TABLE_PREFIX."friendships WHERE friendID = '{$_SESSION['userID']}'" );
-	$friends = array_merge($friendIDs, $otherFriendIDs);
-	foreach( $friends as $friendID ) {
-		$friend = new Kin_User($friendID);
-		$output .= '<li class="user col-sm-4"><a href="/profile/'.$friend->username.'">' . PHP_EOL;
-		$output .= '<img src="/uploads/avatars/'.$friend->userID.'-150x150.jpg" class="portrait" />' . PHP_EOL;
-		$output .= '<h4>'.$friend->name . ' ' . $friend->surname . '</h4>' . PHP_EOL;
+	if( $friends = $db->get_results( "(SELECT userID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE friendID ='".$_SESSION['userID']."') UNION (SELECT friendID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE userID ='".$_SESSION['userID']."')" ) ) {
+	foreach( $friends as $friend ) {
+		$profile = new Kin_User($friend->profileID);
+		$output .= '<li class="user col-sm-4"><a href="/profile/'.$profile->username.'">' . PHP_EOL;
+		$output .= '<img src="/uploads/avatars/'.$profile->userID.'-150x150.jpg" class="portrait" />' . PHP_EOL;
+		$output .= '<h4>'.$profile->name . ' ' . $profile->surname . '</h4>' . PHP_EOL;
 		$output .= '</a></li>' . PHP_EOL;
+		unset($profile);
 	}
 	echo $output;
 } else { ?>
