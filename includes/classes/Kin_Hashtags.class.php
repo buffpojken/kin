@@ -7,7 +7,6 @@ class Kin_Hashtags {
 			$matches[$k] = $v[0];
 		}
 		$matches = array_unique($matches);
-		#echo '<pre>' . print_r($matches, true) . '</pre>';
 		if( count($matches) > 0 ) {
 			foreach($matches as $match) {
 				$hashtag = $match;
