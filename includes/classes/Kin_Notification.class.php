@@ -1,11 +1,12 @@
 <?php
 class Kin_Notification {
 	
-	public function createNotification( $recipientID, $message ) {
+	public function createNotification( $recipientID, $message, $link ) {
 		global $db;
 		$recipientID = $db->escape($recipientID);
 		$message = $db->escape($message);
-		$result = $db->query( "INSERT INTO ".DB_TABLE_PREFIX."notifications(recipientID,message) VALUES('{$recipientID}','{$message}')" );
+		$link = $db->escape($link);
+		$result = $db->query( "INSERT INTO ".DB_TABLE_PREFIX."notifications(recipientID,message,link) VALUES('{$recipientID}','{$message}','{$link}')" );
 		$db->debug();		
 	}
 	

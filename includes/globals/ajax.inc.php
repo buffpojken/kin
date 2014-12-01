@@ -17,6 +17,11 @@ if( isset( $_SESSION['userID'] ) && isset( $_POST['action'] ) && isset( $_POST['
 		case 'likeUpdate':
 			$updateID = $db->escape( $_POST['updateID'] );
 			$db->query("INSERT INTO ".DB_TABLE_PREFIX."likes(userID,updateID) VALUES('{$_SESSION['userID']}', '{$updateID}')");
+			$update = new Kin_Updates($updateID);
+			$author = new Kin_User($update->userID);
+			$notifications->createNotification( $update->userID, $user->name .' ' . $user->surname . ' has liked your post.' , '/profile/'.$author->username.'/updates/'.$updateID );
+			unset($update);
+			unset($author);
 		break;
 		case 'unlikeUpdate':
 			$updateID = $db->escape( $_POST['updateID'] );

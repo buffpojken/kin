@@ -2,7 +2,6 @@
 session_start();
 ob_start();
 require_once('config.inc.php');
-require_once( GLOBALS_PATH . '/ajax.inc.php' );
 if( !isset( $_SESSION['userID'] ) && isset( $_COOKIE['kin_social_login'] ) ) {
 	$userHash = $db->escape( $_COOKIE['kin_social_login'] );
 	$userID = $db->get_var( "SELECT id FROM ".DB_TABLE_PREFIX."users WHERE userHash = '{$userHash}'" );
@@ -15,6 +14,7 @@ if( !isset( $_SESSION['userID'] ) && isset( $_COOKIE['kin_social_login'] ) ) {
 if( isset( $_SESSION['userID'] ) ) {
 	$user = new Kin_User( $_SESSION['userID'] );
 }
+require_once( GLOBALS_PATH . '/ajax.inc.php' );
 require_once( GLOBALS_PATH . '/header.inc.php' );
 ?>
 		

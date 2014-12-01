@@ -35,6 +35,18 @@ class Kin_Updates {
 		}
 	}
 	
+	public function returnUpdateData( $updateID, $column, $echo = FALSE ) {
+		global $db;
+		$uid = $db->escape( $uid );
+		$column = $db->escape( $column );
+		$updateData = $db->get_var( "SELECT {$column} FROM ".DB_TABLE_PREFIX."updates WHERE id = '{$uid}'" );
+		if( $echo ) {
+			echo $updateData;
+		} else {
+			return $updateData;
+		}
+	}
+	
 	public function likeDescriptionOutput( $updateID ) {
 		global $db;
 		$updateID = $db->escape( $updateID );
