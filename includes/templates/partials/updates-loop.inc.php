@@ -8,7 +8,7 @@ $author = new Kin_User($data->userID);
 		<h4><a href="/profile/<?php echo $author->username; ?>"><?php echo $author->name; ?> <?php echo $author->surname; ?></a></h4>
 		<p class="metadata"><a href="/profile/<?php echo $author->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
 	</header>
-	<?php echo $hashtags->createHashtagLinks($data->message); ?><br />
+	<?php echo $data->message; ?><br />
 	<footer class="update-footer">
 		<p>
 			<a href="#" class="likeUpdate" id="like-<?php echo $update->id; ?>" data-id="<?php echo $update->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($data->updateID) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
