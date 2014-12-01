@@ -4,10 +4,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<!-- WEBAPP STUFF -->
-		<meta name="viewport" content="width=device-width, max-scale=1">
+		<meta name="viewport" content="width=device-width, maximum-scale=1">
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>Kin</title>
 		<!-- CSS -->
 		<link rel="stylesheet" href="/assets/css/bootstrap.min.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
