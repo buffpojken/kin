@@ -10,7 +10,8 @@ class Kin_Hashtags {
 		if( count($matches) > 0 ) {
 			foreach($matches as $match) {
 				$hashtag = $match;
-				$message = str_replace($match, '<a href="/hashtag/'.$hashtag.'">'.$hashtag.'</a>', $message);
+				$hashtag = str_replace('#', '', $hashtag);
+				$message = str_replace($match, '<a href="/hashtag/'.$hashtag.'">'.$match.'</a>', $message);
 			}
 		}
 		return $message;
