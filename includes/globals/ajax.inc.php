@@ -1,5 +1,5 @@
 <?php
-if( isset( $_SESSION['userID'] ) && isset( $_POST['action'] ) && isset( $_POST['ajax'] ) && $_POST['ajax']==1 ) {
+if( isset( $_SESSION['userID'] ) && isset( $_POST['action'] ) ) {
 	global $db;
 	switch( $_POST['action'] ) {
 		case 'postUpdate':

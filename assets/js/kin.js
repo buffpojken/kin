@@ -7,7 +7,7 @@ $(document).ready( function(){
 			request = $.ajax({
 				url: '/index.php',
 				type: 'post',
-				data: { ajax: '1', action:	'likeUpdate', updateID: $updateID }
+				data: { action:	'likeUpdate', updateID: $updateID }
 			});
 			
 			request.done(function (response, textStatus, jqXHR){
@@ -23,7 +23,7 @@ $(document).ready( function(){
 			request = $.ajax({
 				url: '/index.php',
 				type: 'post',
-				data: { ajax: '1', action:	'unlikeUpdate', updateID: $updateID }
+				data: { action:	'unlikeUpdate', updateID: $updateID }
 			});
 			
 			request.done(function (response, textStatus, jqXHR){
@@ -49,7 +49,7 @@ $(document).ready( function(){
 		request = $.ajax({
 			url: '/index.php',
 			type: 'post',
-			data: { ajax: '1', action:	$action, statusUpdate: $update, latestUpdate: $latestUpdate }
+			data: { action:	$action, statusUpdate: $update, latestUpdate: $latestUpdate }
 		});
 		
 		request.done(function (response, textStatus, jqXHR){
