@@ -86,15 +86,16 @@ $(document).ready( function(){
 });
 
 if(("standalone" in window.navigator) && window.navigator.standalone){
-	var noddy, remotes = false;
-	document.addEventListener('click', function(event) {
-		noddy = event.target;
-		while(noddy.nodeName !== "A" && noddy.nodeName !== "HTML") {
-			noddy = noddy.parentNode;
-		}
-		if('href' in noddy && noddy.href.indexOf('http') !== -1 && (noddy.href.indexOf(document.location.host) !== -1 || remotes)) {
+	$( document ).on(
+		'click',
+		'a',
+		function( event ){
+			// Stop the default behavior of the browser, which
+			// is to change the URL of the page.
 			event.preventDefault();
-			document.location.href = noddy.href;
+			// Manually change the location of the page to stay in
+			// "Standalone" mode and change the URL at the same time.
+			location.href = $( event.target ).attr( 'href' );
 		}
-	},false);
+	);
 }
