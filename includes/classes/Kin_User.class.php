@@ -131,7 +131,6 @@ class Kin_User {
 		if( isset( $portrait ) && $portrait['error'] != 4 ) {
 			require_once(LIBRARY_PATH."/upload/class.upload.php");
 			$upload = new Upload($portrait);
-			#echo '<pre>'.print_r($upload, true).'</pre>';
 			if ($upload->uploaded) {
 				if( file_exists( UPLOADS_PATH . '/avatars/'.$_SESSION['userID'].'.jpg' ) ) {
 					unlink(UPLOADS_PATH . '/avatars/'.$_SESSION['userID'].'.jpg');
@@ -219,5 +218,7 @@ class Kin_User {
 			return TRUE;
 		}
 	}
+	
+	public function returnProfilePortrait($userID, $size='40x40') {}
 
 }
