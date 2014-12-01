@@ -5,7 +5,7 @@ $(document).ready( function(){
 		var $identifier = $(this).attr('id');
 		if( $text == 'Like' ) {
 			request = $.ajax({
-				url: '/',
+				url: '/index.php',
 				type: 'post',
 				data: { ajax: '1', action:	'likeUpdate', updateID: $updateID }
 			});
