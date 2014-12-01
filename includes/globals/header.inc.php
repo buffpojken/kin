@@ -16,7 +16,7 @@
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<!--<script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>-->
 		<script src="/assets/js/bootstrap.min.js" charset="utf-8"></script>
-		<script src="/assets/js/min/kin-min.js" charset="utf-8"></script>
+		<script src="/assets/js/kin.js" charset="utf-8"></script>
 	</head>
 	<body<?php $utility->bodyClass(); ?>>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
