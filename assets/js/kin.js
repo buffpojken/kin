@@ -21,7 +21,7 @@ $(document).ready( function(){
 			});
 		} else if( $text == 'Unlike' ) {
 			request = $.ajax({
-				url: '/',
+				url: '/index.php',
 				type: 'post',
 				data: { ajax: '1', action:	'unlikeUpdate', updateID: $updateID }
 			});
@@ -47,7 +47,7 @@ $(document).ready( function(){
 		$('textarea#statusUpdate').prop('disabled', true);
 		
 		request = $.ajax({
-			url: '/',
+			url: '/index.php',
 			type: 'post',
 			data: { ajax: '1', action:	$action, statusUpdate: $update, latestUpdate: $latestUpdate }
 		});
