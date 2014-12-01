@@ -17,7 +17,7 @@ $(document).ready( function(){
 			});
 			
 			request.fail(function (jqXHR, textStatus, errorThrown){
-				console.error( 'The following error occurred: '+ textStatus, errorThrown );
+				console.log( 'The following error occurred: '+ textStatus, errorThrown );
 			});
 		} else if( $text == 'Unlike' ) {
 			request = $.ajax({
@@ -33,7 +33,7 @@ $(document).ready( function(){
 			});
 			
 			request.fail(function (jqXHR, textStatus, errorThrown){
-				console.error( 'The following error occurred: '+ textStatus, errorThrown );
+				console.log( 'The following error occurred: '+ textStatus, errorThrown );
 			});
 		}
 		event.preventDefault();
@@ -60,7 +60,7 @@ $(document).ready( function(){
 		});
 		
 		request.fail(function (jqXHR, textStatus, errorThrown){
-			console.error( 'The following error occurred: '+ textStatus, errorThrown );
+			console.log( 'The following error occurred: '+ textStatus, errorThrown );
 		});
 		
 		request.always(function () {
