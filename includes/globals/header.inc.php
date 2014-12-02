@@ -11,7 +11,7 @@
 		<!-- TITLE -->
 		<title><?php $utility->siteTitle(); ?></title>
 		<!-- CSS -->
-		<link rel="stylesheet" href="/assets/css/bootstrap.min.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="/assets/css/cosmo.min.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
 		<link rel="stylesheet" href="/assets/css/kin.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
 		<!-- JS -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -38,7 +38,7 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li<?php if( $_GET['path_page']=='' ) { echo ' class="active"'; } ?>><a href="/">Wall</a></li>
-						<!--<li<?php if( $_GET['path_page'] =='messages' ) { echo ' class="active"'; } ?>><a href="/messages">Messages <span class="badge">42</span></a></li>-->
+						<li<?php if( $_GET['path_page'] =='messages' ) { echo ' class="active"'; } ?>><a href="/messages">Messages</a></li>
 						<li<?php if( $_GET['path_page'] =='friends' ) { echo ' class="active"'; } ?>><a href="/friends">Friends</a></li>
 						<li<?php if( $_GET['path_page'] =='notifications' ) { echo ' class="active"'; } ?>><a href="/notifications">Notifications <?php $unreadCount = $notifications->unreadNotificationCount( $_SESSION["userID"] ); if( $unreadCount > 0 ) { echo '<span class="badge">'.$unreadCount.'</span>'; } ?></a></li>
 					</ul>
