@@ -8,7 +8,8 @@
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<title>Kin</title>
+		<!-- TITLE -->
+		<title><?php $utility->siteTitle(); ?></title>
 		<!-- CSS -->
 		<link rel="stylesheet" href="/assets/css/bootstrap.min.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
 		<link rel="stylesheet" href="/assets/css/kin.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">

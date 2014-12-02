@@ -9,6 +9,32 @@ class Kin_Utility {
 		}
 	}
 	
+	public function siteTitle() {
+		if( isset( $_GET['path_page'] ) ) {
+		
+			if( isset( $_GET['path_section'] ) ) {
+		
+				if( $_GET['path_page'] == 'profile' ) {
+				
+					$name = new Kin_User($_GET['path_section']);
+					$output .= $name->name . ' ' . $name->surname . ' · ' . $this->siteOptions('SITE_NAME', FALSE);
+				
+				} else {
+				
+					$output .= ucfirst($_GET['path_section'] . ' · ' . $this->siteOptions('SITE_NAME', FALSE));
+				
+				}
+			
+			} else {
+		
+				$output .= ucfirst($_GET['path_page'] . ' · ' . $this->siteOptions('SITE_NAME', FALSE));
+		
+			}
+		
+		}
+		echo $output;
+	}
+	
 	public function siteOptions($key, $echo=TRUE) {
 		global $db;
 		$key = $db->escape( $key );
