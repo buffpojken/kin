@@ -60,7 +60,7 @@ class Kin_Private_Messages {
 		$message = $db->escape($message);
 		$result = $db->query("INSERT INTO ".DB_TABLE_PREFIX."messages(threadID,senderID,recipientID,subject,message) VALUES('{$threadID}','{$senderID}','{$recipientID}','{$subject}','{$message}')"); 
 		if ( $result ) {
-			$author = new Kin_User($recipientID);
+			$author = new Kin_User($_SESSION['userID']);
 			$notifications->createNotification( $recipientID, $author->name . ' ' . $author->surname . ' has sent you a private message.', '/messages/'. $db->insert_id );
 			return TRUE;
 		} else {
