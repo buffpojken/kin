@@ -8,10 +8,32 @@
 	<input type="hidden" name="ajax" value="1" />
 </form>
 
-<ul id="updates">
-<?php
-$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC LIMIT 15" );
-foreach( $updates as $update ) {
-	require( TEMPLATE_PATH . '/partials/updates-loop.inc.php' );
-} ?>
-</ul>
+<div role="tabpanel">
+	<!-- Nav tabs -->
+	<ul class="nav nav-pills nav-justified" role="tablist">
+		<li role="presentation" class="active"><a href="#friends" aria-controls="friends" role="tab" data-toggle="tab">Friends</a></li>
+		<li role="presentation"><a href="#everyone" aria-controls="everyone" role="tab" data-toggle="tab">Everone</a></li>
+	</ul><br />
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="friends">
+			<ul class="updates">
+			<?php
+			$friendIDs = implode(",", $user->returnFriendsUserIDs( $_SESSION['userID'] ));
+			$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE userID IN ($friendIDs) ORDER BY id DESC LIMIT 15" );
+			foreach( $updates as $update ) {
+				require( TEMPLATE_PATH . '/partials/updates-loop.inc.php' );
+			} ?>
+			</ul>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="everyone">
+			<ul class="updates">
+			<?php
+			$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC LIMIT 15" );
+			foreach( $updates as $update ) {
+				require( TEMPLATE_PATH . '/partials/updates-loop.inc.php' );
+			} ?>
+			</ul>
+		</div>
+	</div>
+</div>

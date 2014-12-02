@@ -221,9 +221,9 @@ class Kin_User {
 	
 	public function returnProfilePortrait($userID, $size='40x40') {}
 	
-	public function returnFriendsUserIDs($userID) {
+	public function returnFriendsUserIDs($userID = FALSE ) {
 		global $db;
-		$friendsUserIDs = $db->get_results( "(SELECT userID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE friendID ='".$_SESSION['userID']."') UNION (SELECT friendID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE userID ='".$_SESSION['userID']."')", ARRAY_N );
+		$friendsUserIDs = $db->get_results( "(SELECT userID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE friendID ='".$userID."') UNION (SELECT friendID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE userID ='".$userID."')", ARRAY_N );
 		foreach($friendsUserIDs as $k=>$v) {
 			$friends[$k] = $v[0];
 		}
