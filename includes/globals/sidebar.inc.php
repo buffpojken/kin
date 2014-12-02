@@ -13,8 +13,4 @@
 		<p><a href="/profile">Profile</a> · <a href="/friends">Friends</a> · <a href="/logout">Log out</a></p>
 	</aside>
 	<?php } ?>
-	<p class="copyright">
-		Proudly powered by <a href="#">Kin</a>.<br />
-		Version <?php echo KIN_VERSION; ?>
-	</p>
 </div>

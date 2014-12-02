@@ -38,11 +38,20 @@ require_once( GLOBALS_PATH . '/header.inc.php' );
 				<?php require_once( GLOBALS_PATH . '/sidebar.inc.php' ); ?>
 			</div>
 		</div>
-		<!--<footer class="row" id="footer">
-			<div class="col-sm-12">
-				<p class="text-center">Lorem ipsum dolor sit amet.</p>
+		<footer id="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<p><strong><?php $utility->siteOptions('SITE_NAME', TRUE); ?></strong> <small><?php $utility->siteOptions('SITE_DESCRIPTION', TRUE); ?></small></p>
+					</div>
+					<div class="col-sm-6">
+						<p class="copyright pull-right">
+							Proudly powered by <a href="https://github.com/tmertz/kin">Kin</a>. Version <?php echo KIN_VERSION; ?>
+						</p>
+					</div>
+				</div>
 			</div>
-		</footer>-->
+		</footer>
 	</body>
 </html>
 <?php ob_end_flush(); ?>

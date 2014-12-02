@@ -30,7 +30,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/">Kin</a>
+					<a class="navbar-brand" href="/"><?php $utility->siteOptions('SITE_NAME', TRUE); ?></a>
 				</div>
 			
 				<!-- Collect the nav links, forms, and other content for toggling -->
