@@ -15,6 +15,13 @@ if( isset( $_GET['path_section'] ) ) {
 	<div class="page-header">
 		<h1><?php echo $message->subject; ?></h1>
 	</div>
+	<?php if( isset( $_POST['action'] ) && $_POST['action']=='sendReply' ) {
+		if( $messageUtility->sendReply( $_POST['reply_recipient'], $_POST['reply_content'], $_POST['reply_threadID'] ) ) {
+			echo '<div class="alert alert-success" role="alert"><strong>Hooray!</strong> Your message was sent!</div>';
+		} else {
+			echo '<div class="alert alert-danger" role="alert"><strong>Boo!</strong> Your message wasn\'t sent!</div>';
+		}
+	} ?>
 	<p class="metadata">
 		<a href="/messages/">Back to inbox</a> · 
 		from <?php echo $sender->name . ' ' . $sender->surname; ?> · 
@@ -51,6 +58,24 @@ if( isset( $_GET['path_section'] ) ) {
 			} ?>
 		</tbody>
 	</table>
+	
+	<form class="form-horizontal" role="form" method="post" action="">
+		<div class="form-group">
+			<label for="reply_content" class="col-sm-2 control-label">Reply</label>
+			<div class="col-sm-10">
+				<textarea id="reply_content" name="reply_content" rows="6" class="form-control"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-default">Reply</button>
+			</div>
+		</div>
+		<input type="hidden" name="action" value="sendReply" />
+		<input type="hidden" name="reply_threadID" value="<?php echo $message->threadID; ?>" />
+		<input type="hidden" name="reply_recipient" value="<?php echo $message->senderID; ?>" />
+	</form>
+	
 	<?php }
 } else { ?>	
 	<div class="page-header">

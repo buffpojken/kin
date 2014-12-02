@@ -6,8 +6,7 @@ class Kin_Notification {
 		$recipientID = $db->escape($recipientID);
 		$message = $db->escape($message);
 		$link = $db->escape($link);
-		$result = $db->query( "INSERT INTO ".DB_TABLE_PREFIX."notifications(recipientID,message,link) VALUES('{$recipientID}','{$message}','{$link}')" );
-		$db->debug();		
+		$result = $db->query( "INSERT INTO ".DB_TABLE_PREFIX."notifications(recipientID,message,link) VALUES('{$recipientID}','{$message}','{$link}')" );	
 	}
 	
 	public function unreadNotificationCount( $recipientID ) {

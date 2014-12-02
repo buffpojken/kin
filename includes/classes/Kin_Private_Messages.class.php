@@ -67,4 +67,21 @@ class Kin_Private_Messages {
 			return FALSE;
 		}
 	}
+	
+	public function sendReply($recipientID,$message,$threadID) {
+		global $db;
+		global $notifications;
+		$threadID = $db->escape($threadID);
+		$senderID = $db->escape($_SESSION['userID']);
+		$recipientID = $db->escape($recipientID);
+		$message = $db->escape($message);
+		$result = $db->query("INSERT INTO ".DB_TABLE_PREFIX."messages(threadID,senderID,recipientID,message) VALUES('{$threadID}','{$senderID}','{$recipientID}','{$message}')"); 
+		if ( $result ) {
+			$author = new Kin_User($_SESSION['userID']);
+			$notifications->createNotification( $recipientID, $author->name . ' ' . $author->surname . ' has sent you a private message.', '/messages/'. $db->insert_id );
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
 }
