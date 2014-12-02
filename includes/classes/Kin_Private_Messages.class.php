@@ -51,6 +51,7 @@ class Kin_Private_Messages {
 	
 	public function sendMessage($recipientID,$subject,$message) {
 		global $db;
+		global $notifications;
 		$threadID = $db->get_var( "SELECT threadID FROM ".DB_TABLE_PREFIX."messages ORDER BY threadID DESC LIMIT 1" );
 		$threadID = $threadID + 1;
 		$senderID = $db->escape($_SESSION['userID']);
@@ -59,6 +60,8 @@ class Kin_Private_Messages {
 		$message = $db->escape($message);
 		$result = $db->query("INSERT INTO ".DB_TABLE_PREFIX."messages(threadID,senderID,recipientID,subject,message) VALUES('{$threadID}','{$senderID}','{$recipientID}','{$subject}','{$message}')"); 
 		if ( $result ) {
+			$author = new Kin_User($recipientID);
+			$notifications->createNotification( $recipientID, $author->name . ' ' . $author->surname . ' has sent you a private message.', '/messages/'. $db->insert_id );
 			return TRUE;
 		} else {
 			return FALSE;
