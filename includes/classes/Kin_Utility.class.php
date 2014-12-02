@@ -1,6 +1,6 @@
 <?php
 class Kin_Utility {
-	
+
 	public function bodyClass( $classes=NULL ) {
 		if( isset( $_GET['path_page'] ) ) { 
 			echo ' class="'.$_GET['path_page'].'"'; 
@@ -17,19 +17,23 @@ class Kin_Utility {
 				if( $_GET['path_page'] == 'profile' ) {
 				
 					$name = new Kin_User($_GET['path_section']);
-					$output .= $name->name . ' ' . $name->surname . ' · ' . $this->siteOptions('SITE_NAME', FALSE);
+					$output = $name->name . ' ' . $name->surname . ' · ' . $this->siteOptions('SITE_NAME', FALSE);
 				
 				} else {
 				
-					$output .= ucfirst($_GET['path_section'] . ' · ' . $this->siteOptions('SITE_NAME', FALSE));
+					$output = ucfirst($_GET['path_section'] . ' · ' . $this->siteOptions('SITE_NAME', FALSE));
 				
 				}
 			
 			} else {
 		
-				$output .= ucfirst($_GET['path_page'] . ' · ' . $this->siteOptions('SITE_NAME', FALSE));
+				$output = ucfirst($_GET['path_page'] . ' · ' . $this->siteOptions('SITE_NAME', FALSE));
 		
 			}
+		
+		} else {
+		
+			$output = $this->siteOptions('SITE_NAME', FALSE);
 		
 		}
 		echo $output;
