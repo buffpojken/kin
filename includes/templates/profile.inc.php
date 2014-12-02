@@ -7,7 +7,14 @@ if( isset( $_GET['path_section'] ) ) {
 		$profile = new Kin_User($_GET['path_section']);		
 		?>
 		<div id="profileCard" class="well well-sm">
-			<img src="/uploads/avatars/<?php echo $profile->userID; ?>-150x150.jpg" class="portrait pull-left" />
+			<?php
+			if( file_exists( UPLOADS_PATH . '/avatars/'.$profile->userID.'-150x150.jpg' ) ) {
+				echo '<img src="/uploads/avatars/'.$profile->userID.'-150x150.jpg" class="portrait pull-left" />' . PHP_EOL;
+			} else {
+				$firstInitial = substr($profile->name, 0, 1);
+				$lastInitial = substr($profile->surname, 0, 1);
+				echo '<img src="http://placehold.it/150/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait pull-left" />' . PHP_EOL;
+			} ?>
 			<h1><?php echo $profile->name . ' ' . $profile->surname; ?></h1>
 			<?php if( $profile->isCurrentUserFriendsWithThisProfile($profile->userID) && $profile->userID != $_SESSION['userID'] ) { ?>
 			<p>You already friends. <a href="#">Unfriend?</a></p>
