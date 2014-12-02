@@ -56,7 +56,7 @@ $(document).ready( function(){
 		});
 		
 		request.done(function (response, textStatus, jqXHR){
-			console.log( 'The following message returned: '+ textStatus + ' / ', response );
+			//console.log( 'The following message returned: '+ textStatus + ' / ', response );
 			$('textarea#statusUpdate').val('');
 			$('textarea#statusUpdate').animate({ height: 30 }, 'normal');
 			$('ul#updates').hide().prepend(response).fadeIn('slow');
