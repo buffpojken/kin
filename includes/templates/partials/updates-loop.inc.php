@@ -4,7 +4,14 @@ $author = new Kin_User($data->userID);
 ?>	
 <li class="update" data-update-id="<?php echo $update->id; ?>">
 	<header class="update-header">
-		<img src="/uploads/avatars/<?php echo $data->userID; ?>-40x40.jpg" class="portrait" />
+		<?php
+		if( file_exists( UPLOADS_PATH . '/avatars/'.$author->userID.'-40x40.jpg' ) ) {
+			echo '<img src="/uploads/avatars/'.$author->userID.'-40x40.jpg" class="portrait" />' . PHP_EOL;
+		} else {
+			$firstInitial = substr($author->name, 0, 1);
+			$lastInitial = substr($author->surname, 0, 1);
+			echo '<img src="http://placehold.it/40/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait" />' . PHP_EOL;
+		} ?>
 		<h4><a href="/profile/<?php echo $author->username; ?>"><?php echo $author->name; ?> <?php echo $author->surname; ?></a></h4>
 		<p class="metadata"><a href="/profile/<?php echo $author->username; ?>/updates/<?php echo $update->id; ?>"><?php echo $utility->timeSince($data->timestamp); ?></a></p>
 	</header>
