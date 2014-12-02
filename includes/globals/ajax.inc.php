@@ -5,10 +5,13 @@ if( isset( $_SESSION['userID'] ) && isset( $_POST['action'] ) && isset( $_POST['
 		case 'postUpdate':
 			$update = $db->escape( $hashtags->createHashtagLinks($_POST['statusUpdate']) );
 			$latestUpdate = $db->escape( $_POST['latestUpdate'] );
-			
 			$result = $db->query("INSERT INTO ".DB_TABLE_PREFIX."updates(userID,message) VALUES('{$_SESSION['userID']}', '{$update}')");
-			
-			if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE id > '{$latestUpdate}' ORDER BY id DESC" ) ) {
+			if( $latestUpdate == 0 ) {
+				$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates ORDER BY id DESC" );
+			} else {
+				$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE id > '{$latestUpdate}' ORDER BY id DESC" );
+			}
+			if( $updates ) {
 				foreach( $updates as $update ) {
 					require( TEMPLATE_PATH . '/partials/updates-loop.inc.php' );
 				}

@@ -44,6 +44,9 @@ $(document).ready( function(){
 		var $update = $('textarea#statusUpdate').val();
 		var $action = $('input[name="action"]').val();
 		var $latestUpdate = $('ul#updates > li.update:first-child').data('updateId');
+		if( $latestUpdate === null ) {
+			$latestUpdate = 0;
+		}
 		$('textarea#statusUpdate').prop('disabled', true);
 		
 		request = $.ajax({
