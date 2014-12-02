@@ -1,12 +1,16 @@
 <?php 
+$messageUtility = new Kin_Private_Messages();
 if( isset( $_GET['path_section'] ) ) {
 	if( !is_numeric( $_GET['path_section'] )  ) {
-		HEADER('Location: /messages');
+		HEADER('Location: /messages/');
+		exit;
+	} elseif( is_numeric( $_GET['path_section'] ) && !$messageUtility->canCurrentUserReadThis($_SESSION['userID'], $_GET['path_section']) ) {
+		HEADER('Location: /messages/');
 		exit;
 	} else {
-		
+		echo 'Foo';
 	}
-}  ?>	
+} else { ?>	
 	<div class="page-header">
 		<h1>Messages</h1>
 	</div>
@@ -39,4 +43,5 @@ if( isset( $_GET['path_section'] ) ) {
 	</form>
 	<?php  } else {
 		echo '<p class="text-center">You have no unread messages.</p>';
-	} ?>
+	}
+} ?>

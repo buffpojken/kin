@@ -26,4 +26,16 @@ class Kin_Private_Messages {
 		}
 	}
 	
+	public function canCurrentUserReadThis($userID,$messageID) {
+		global $db;
+		$userID = $db->escape($userID);
+		$messageID = $db->escape($messageID);
+		$result = $db->get_var( "SELECT COUNT(id) FROM ".DB_TABLE_PREFIX."messages WHERE id='{$messageID}' AND (senderID = '{$userID}' OR recipientID = '{$userID}')" );
+		if( $result > 0 ) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+	
 }
