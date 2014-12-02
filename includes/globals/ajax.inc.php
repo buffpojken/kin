@@ -2,6 +2,11 @@
 if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQUEST['ajax'] ) && $_REQUEST['ajax']==1 ) {
 	global $db;
 	switch( $_REQUEST['action'] ) {
+		case 'userLookup':
+			$usernames = array('Kara','Octavius','Nikita','Xenocratus');
+			$json = json_encode($usernames);
+			echo $json;
+		break;
 		case 'postUpdate':
 			$update = $db->escape( $hashtags->createHashtagLinks($_REQUEST['statusUpdate']) );
 			$latestUpdate = $db->escape( $_REQUEST['latestUpdate'] );

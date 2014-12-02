@@ -12,12 +12,13 @@
 		<title><?php $utility->siteTitle(); ?></title>
 		<!-- CSS -->
 		<link rel="stylesheet" href="/assets/css/cosmo.min.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
-		<link rel="stylesheet" href="/assets/css/kin.css" title="Bootstrap" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="/assets/js/chosen_v1.2.0/chosen.min.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="/assets/css/kin.css" type="text/css" media="screen" charset="utf-8">
 		<!-- JS -->
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<!--<script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>-->
-		<script src="/assets/js/bootstrap.min.js" charset="utf-8"></script>
-		<script src="/assets/js/kin.js" charset="utf-8"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+		<script src="/assets/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/assets/js/chosen_v1.2.0/chosen.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/assets/js/kin.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body<?php $utility->bodyClass(); ?>>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">

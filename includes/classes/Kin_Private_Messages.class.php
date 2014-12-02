@@ -49,4 +49,19 @@ class Kin_Private_Messages {
 		$db->query( "UPDATE ".DB_TABLE_PREFIX."messages SET isRead='1' WHERE id='{$messageID}'" );
 	}
 	
+	public function sendMessage($recipientID,$subject,$message) {
+		global $db;
+		$threadID = $db->get_var( "SELECT threadID FROM ".DB_TABLE_PREFIX."messages ORDER BY threadID DESC LIMIT 1" );
+		$threadID = $threadID + 1;
+		$senderID = $db->escape($_SESSION['userID']);
+		$recipientID = $db->escape($recipientID);
+		$subject = $db->escape($subject);
+		$message = $db->escape($message);
+		$result = $db->query("INSERT INTO ".DB_TABLE_PREFIX."messages(threadID,senderID,recipientID,subject,message) VALUES('{$threadID}','{$senderID}','{$recipientID}','{$subject}','{$message}')"); 
+		if ( $result ) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
 }

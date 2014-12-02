@@ -1,4 +1,11 @@
 $(document).ready( function(){
+	$('select.chosen-select').chosen({
+		disable_search_threshold: 10,
+		no_results_text: "Oops, nothing found!",
+		width: "100%",
+		max_selected_options: 1
+	});
+	
 	$('a.likeUpdate').on('click', function() {
 		var $text = $(this).text();
 		var $updateID = $(this).data('id');

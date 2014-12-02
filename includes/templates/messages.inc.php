@@ -56,6 +56,13 @@ if( isset( $_GET['path_section'] ) ) {
 	<div class="page-header">
 		<h1>Messages</h1>
 	</div>
+	<?php if( isset( $_POST['action'] ) && $_POST['action']=='sendMessage' ) {
+		if( $messageUtility->sendMessage( $_POST['message_recipient'], $_POST['message_subject'], $_POST['message_content'] ) ) {
+			echo '<div class="alert alert-success" role="alert"><strong>Hooray!</strong> Your message was sent!</div>';
+		} else {
+			echo '<div class="alert alert-danger" role="alert"><strong>Boo!</strong> Your message wasn\'t sent!</div>';
+		}
+	} ?>
 	<?php if( isset( $_POST['action'] ) && $_POST['action']=='bulkEditMessages' ) {
 		foreach( $_POST['messages'] as $message ) {
 			$messageUtility->moveMessagesToArchive($message);
@@ -76,7 +83,6 @@ if( isset( $_GET['path_section'] ) ) {
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<!--<th></th>-->
 								<th>Subject</th>
 								<th>From</th>
 								<th>When</th>
@@ -87,13 +93,11 @@ if( isset( $_GET['path_section'] ) ) {
 							$message = new Kin_Private_Messages($messageData->id);
 							$sender = new Kin_User($message->senderID);
 							echo '<tr>';
-							#echo '<td align="right"><input type="checkbox" name="messages[]" value="'.$message->messageID.'" /></td>';
 							if( $message->isRead == 0 ) {
 								echo '<td><a href="/messages/'.$message->messageID.'/"><strong>'.$message->subject.'</strong></a></td>';
 							} else {
 								echo '<td><a href="/messages/'.$message->messageID.'/">'.$message->subject.'</a></td>';
 							}
-							echo '<td><a href="/messages/'.$message->messageID.'/">'.$message->subject.'</a></td>';
 							echo '<td><a href="/profile/'.$sender->username.'/">' . $sender->name . ' ' . $sender->surname .'</a></td>';
 							echo '<td>' . $utility->timeSince($message->timestamp, FALSE).'</td>';
 							echo '<tr>';
@@ -136,3 +140,40 @@ if( isset( $_GET['path_section'] ) ) {
 		</div>
 	</div>
 <?php } ?>
+
+<div class="modal fade" id="composeMessage" tabindex="-1" role="dialog" aria-labelledby="composeMessage" aria-hidden="true">
+	<div class="modal-dialog">
+		<form class="modal-content" method="post" action="">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">Compose message</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="message_recipient">Please select the recipient</label>
+					<select class="form-control chosen-select" name="message_recipient" id="message_recipient">
+					<?php
+					if( $recipients = $db->get_results("SELECT * FROM ".DB_TABLE_PREFIX."users ORDER BY name ASC") ) {
+						foreach( $recipients as $recipient ) {
+							echo '<option value="'.$recipient->id.'">'.$recipient->name.' '.$recipient->surname.'</option>';
+						}
+					} else {} ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="message_subject">Subject</label>
+					<input type="text" class="form-control" name="message_subject" id="message_subject" placeholder="Write subject here ... " />
+				</div>
+				<div class="form-group">
+					<label for="message_content">Message</label>
+					<textarea class="form-control" name="message_content" id="message_content" rows="6"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Send message</button>
+			</div>
+			<input type="hidden" name="action" value="sendMessage" />
+		</form>
+	</div>
+</div>

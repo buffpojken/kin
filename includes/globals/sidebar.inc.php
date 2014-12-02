@@ -12,5 +12,10 @@
 		<h4>Hi, <?php $user->getUserData($_SESSION["userID"],'name', TRUE); ?> <?php $user->getUserData($_SESSION["userID"],'surname', TRUE); ?></h4>
 		<p><a href="/profile">Profile</a> · <a href="/logout">Log out</a></p>
 	</aside>
-	<?php } ?>
+	<?php if( $_GET['path_page']=='messages' ) { ?>
+	<aside class="widget">
+		<p><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#composeMessage">Compose new message</button></p>
+	</aside>
+	<?php }
+	} ?>
 </div>
