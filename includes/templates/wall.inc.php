@@ -10,7 +10,7 @@
 
 <div role="tabpanel">
 	<!-- Nav tabs -->
-	<ul class="nav nav-pills nav-justified" role="tablist">
+	<ul class="nav nav-tabs nav-justified" role="tablist">
 		<li role="presentation" class="active"><a href="#friends" aria-controls="friends" role="tab" data-toggle="tab">Friends</a></li>
 		<li role="presentation"><a href="#everyone" aria-controls="everyone" role="tab" data-toggle="tab">Everone</a></li>
 	</ul><br />
