@@ -20,7 +20,7 @@ require_once( GLOBALS_PATH . '/header.inc.php' );
 		
 		<div id="site-body" class="container">
 			<div class="row">
-				<div class="col-md-6 col-md-offset-2">
+				<div class="col-md-9">
 				<?php if( isset ( $_SESSION["userID"] ) ) {
 					if( isset( $_GET["path_page"] ) ) {
 						if( file_exists( TEMPLATE_PATH . '/' . $_GET["path_page"] . '.inc.php' ) ) {
