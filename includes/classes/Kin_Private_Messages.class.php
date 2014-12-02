@@ -21,6 +21,7 @@ class Kin_Private_Messages {
 			$this->recipientID = $message->recipientID;
 			$this->timestamp = $message->timestamp;
 			$this->subject = $message->subject;
+			$this->message = $message->message;
 			$this->isRead = $message->isRead;
 			return $this;
 		}

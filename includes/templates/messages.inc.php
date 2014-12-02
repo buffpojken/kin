@@ -7,9 +7,36 @@ if( isset( $_GET['path_section'] ) ) {
 	} elseif( is_numeric( $_GET['path_section'] ) && !$messageUtility->canCurrentUserReadThis($_SESSION['userID'], $_GET['path_section']) ) {
 		HEADER('Location: /messages/');
 		exit;
-	} else {
-		echo 'Foo';
-	}
+	} else { 
+		$message = new Kin_Private_Messages( $_GET['path_section'] );
+		$sender = new Kin_User( $message->senderID );
+	?>
+	<div class="page-header">
+		<h1><?php echo $message->subject; ?></h1>
+	</div>
+	<p class="metadata">
+		<a href="/messages/">Back to inbox</a> · 
+		from <?php echo $sender->name . ' ' . $sender->surname; ?> · 
+		received <?php $utility->timeSince($message->timestamp, TRUE); ?>
+	</p>
+	<table class="table">
+		<tr>
+			<td></td>
+			<td><?php echo nl2br($message->message); ?></td>
+		</tr>
+		<?php 
+		if( $repliesData = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."messages WHERE replyToID ='{$message->messageID}' AND id <> replyToID ORDER BY timestamp DESC" ) ) {
+			foreach( $repliesData as $replyData ) {
+				$replyMessage = new Kin_Private_Messages($replyData->id);
+				$replySender = new Kin_User($replyMessage->senderID); ?>
+		<tr>
+			<td><a href="/profile/<?php echo $sender->username; ?>/"><?php echo $replySender->name . ' ' . $replySender->surname; ?></a><br /><?php $utility->timeSince($replyMessage->timestamp, TRUE); ?></td>
+			<td><?php echo nl2br($replyMessage->message); ?></td>
+		<tr>
+			<?php }
+		} ?>
+	</table>
+	<?php }
 } else { ?>	
 	<div class="page-header">
 		<h1>Messages</h1>
