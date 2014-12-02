@@ -1,27 +1,8 @@
 # Kin rules #
 #############
-/vendor
-/uploads/avatars/*.jpg
-/uploads/avatars/*.gif
-/uploads/avatars/*.png
-config.codekit
-config.inc.php
-dandelion.yml
-
-###################
-# Compiled source #
-###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-
-# Packages #
-############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
+.DS_Store
+.DS_Store?
+._*
 *.7z
 *.dmg
 *.gz
@@ -30,19 +11,18 @@ dandelion.yml
 *.rar
 *.tar
 *.zip
-
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
-
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
 .Spotlight-V100
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.log
+*.sql
+*.sqlite
+/vendor
+/uploads/avatars/*.jpg
+/uploads/avatars/*.gif
+/uploads/avatars/*.png
+config.codekit
+config.inc.php
+dandelion.yml
+!/assets/sql/kin_db_structure.sql
