@@ -2,7 +2,7 @@
 class Kin_Private_Messages {
 	
 	var $messageID;
-	var $replyToID;
+	var $threadID;
 	var $senderID;
 	var $recipientID;
 	var $timestamp;
@@ -16,7 +16,7 @@ class Kin_Private_Messages {
 			$messageIdentifier = $db->escape($messageIdentifier);
 			$message = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."messages WHERE id = '{$messageIdentifier}'");
 			$this->messageID = $message->id;
-			$this->replyToID = $message->replyToID;
+			$this->threadID = $message->threadID;
 			$this->senderID = $message->senderID;
 			$this->recipientID = $message->recipientID;
 			$this->timestamp = $message->timestamp;
@@ -37,6 +37,16 @@ class Kin_Private_Messages {
 		} else {
 			return FALSE;
 		}
+	}
+	
+	public function markMessageAsRead( $messageID=FALSE ) {
+		global $db;
+		if( $messageID ) {
+			$messageID = $db->escape($messageID);
+		} else {
+			$messageID = $this->messageID;
+		}
+		$db->query( "UPDATE ".DB_TABLE_PREFIX."messages SET isRead='1' WHERE id='{$messageID}'" );
 	}
 	
 }

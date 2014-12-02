@@ -26,7 +26,7 @@ if( isset( $_GET['path_section'] ) ) {
 		
 		<?php if( isset( $_GET['path_item'] ) ) {
 			if( $_GET['path_item']=='updates' && is_numeric( $_GET['path_action'] ) ) { ?>
-		<ul id="updates">
+		<ul class="updates">
 		<?php
 		if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE id = '{$_GET['path_action']}' LIMIT 1" ) ) {
 			foreach( $updates as $update ) {
@@ -42,7 +42,7 @@ if( isset( $_GET['path_section'] ) ) {
 			}
 		} else { ?>
 			
-		<ul id="updates">
+		<ul class="updates">
 		<?php
 		if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE userID = '{$profile->userID}' ORDER BY id DESC LIMIT 15" ) ) {
 			foreach( $updates as $update ) {

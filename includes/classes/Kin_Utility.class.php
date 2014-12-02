@@ -19,6 +19,11 @@ class Kin_Utility {
 					$name = new Kin_User($_GET['path_section']);
 					$output = $name->name . ' ' . $name->surname . ' · ' . $this->siteOptions('SITE_NAME', FALSE);
 				
+				} elseif( $_GET['path_page'] == 'messages' ) {
+				
+					$message = new Kin_Private_Messages($_GET['path_section']);
+					$output = $message->subject . ' · Messages · ' . $this->siteOptions('SITE_NAME', FALSE);
+				
 				} else {
 				
 					$output = ucfirst($_GET['path_section'] . ' · ' . $this->siteOptions('SITE_NAME', FALSE));
