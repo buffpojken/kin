@@ -27,10 +27,10 @@ define('UPLOADS_PATH',realpath(dirname(__FILE__)).'/uploads');
 //==================================
 require_once(LIBRARY_PATH."/ezsql/ez_sql_core.php");
 require_once(LIBRARY_PATH."/ezsql/ez_sql_mysqli.php");
-$dbUser = "root";
-$dbPass = "Bash49350653";
-$dbName = "tmertz_dev.kin.com";
-$dbHost = "localhost";
+$dbUser = "";
+$dbPass = "";
+$dbName = "";
+$dbHost = "";
 $db = new ezSQL_mysqli($dbUser,$dbPass,$dbName,$dbHost);
 
 //==================================
@@ -40,6 +40,8 @@ $db = new ezSQL_mysqli($dbUser,$dbPass,$dbName,$dbHost);
 require(CLASSES_PATH . '/Kin_User.class.php');
 require(CLASSES_PATH . '/Kin_Updates.class.php');
 require(CLASSES_PATH . '/Kin_Notification.class.php');
+require(CLASSES_PATH . '/Kin_Hashtags.class.php');
 require(CLASSES_PATH . '/Kin_Utility.class.php');
 $utility = new Kin_Utility;
 $notifications = new Kin_Notification;
+$hashtags = new Kin_Hashtags;
