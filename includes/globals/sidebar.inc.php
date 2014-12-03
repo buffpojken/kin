@@ -10,7 +10,7 @@
 			echo '<img src="http://placehold.it/150/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait" />' . PHP_EOL;
 		} ?>
 		<h4>Hi, <?php $user->getUserData($_SESSION["userID"],'name', TRUE); ?> <?php $user->getUserData($_SESSION["userID"],'surname', TRUE); ?></h4>
-		<p><a href="/profile">Profile</a> · <a href="/logout">Log out</a></p>
+		<p><a href="/profile" class="btn btn-default">Profile</a></p>
 	</aside>
 	<?php if( $_GET['path_page']=='messages' ) { ?>
 	<aside class="widget">

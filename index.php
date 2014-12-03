@@ -14,6 +14,7 @@ try {
 	$utility = new Kin_Utility;
 	$notifications = new Kin_Notification;
 	$hashtags = new Kin_Hashtags;
+	$messageUtility = new Kin_Private_Messages;
 } catch (Exception $e) {
     echo $e->getMessage(), "\n";
 }
@@ -60,7 +61,7 @@ require_once( GLOBALS_PATH . '/header.inc.php' );
 						<p><strong><?php $utility->siteOptions('SITE_NAME', TRUE); ?></strong> <small><?php $utility->siteOptions('SITE_DESCRIPTION', TRUE); ?></small></p>
 					</div>
 					<div class="col-sm-6">
-						<p class="copyright pull-right">
+						<p class="copyright text-right">
 							Proudly powered by <a href="https://github.com/tmertz/kin">Kin</a>. Version <?php echo KIN_VERSION; ?><br />
 							<?php if( file_exists('.revision') ) { echo 'Build#: ' . file_get_contents('.revision'); } ?>
 						</p>

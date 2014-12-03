@@ -84,4 +84,11 @@ class Kin_Private_Messages {
 			return FALSE;
 		}
 	}
+	
+	public function unreadMessageCount( $recipientID ) {
+		global $db;
+		$recipientID = $db->escape($recipientID);
+		$count = $db->get_var( "SELECT COUNT(id) FROM ".DB_TABLE_PREFIX."messages WHERE senderID <>'{$recipientID}' AND recipientID ='{$recipientID}' AND isRead='0' GROUP BY threadID" );
+		return $count;
+	}
 }

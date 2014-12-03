@@ -142,3 +142,7 @@ if(("standalone" in window.navigator) && window.navigator.standalone){
 		}
 	);
 }
+
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip()
+});
