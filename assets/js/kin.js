@@ -97,7 +97,7 @@ $(document).ready( function(){
 		});
 		
 		request.done(function (response, textStatus, jqXHR){
-			console.log( 'The following message returned: '+ textStatus + ' / ', response );
+			//console.log( 'The following message returned: '+ textStatus + ' / ', response );
 			$('input#comment_message').val('');
 			$('ul.updates').hide().append(response).fadeIn('slow');
 		});
