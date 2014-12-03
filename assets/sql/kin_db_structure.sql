@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.21)
 # Database: tmertz_dev.kin.com
-# Generation Time: 2014-12-02 11:24:31 +0000
+# Generation Time: 2014-12-03 12:12:50 +0000
 # ************************************************************
 
 
@@ -74,12 +74,13 @@ DROP TABLE IF EXISTS `kin_messages`;
 
 CREATE TABLE `kin_messages` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `replyToID` int(11) DEFAULT '0',
+  `threadID` int(11) DEFAULT '0',
   `senderID` int(11) DEFAULT NULL,
   `recipientID` int(11) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `subject` varchar(200) DEFAULT '',
   `message` longtext,
+  `isRead` binary(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -109,6 +110,8 @@ DROP TABLE IF EXISTS `kin_options`;
 
 CREATE TABLE `kin_options` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `option_key` varchar(100) DEFAULT NULL,
+  `option_value` longtext,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
