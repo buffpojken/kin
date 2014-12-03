@@ -61,7 +61,8 @@ require_once( GLOBALS_PATH . '/header.inc.php' );
 					</div>
 					<div class="col-sm-6">
 						<p class="copyright pull-right">
-							Proudly powered by <a href="https://github.com/tmertz/kin">Kin</a>. Version <?php echo KIN_VERSION; ?>
+							Proudly powered by <a href="https://github.com/tmertz/kin">Kin</a>. Version <?php echo KIN_VERSION; ?><br />
+							<?php if( file_exists('.revision') ) { echo 'Build#: ' . file_get_contents('.revision'); } ?>
 						</p>
 					</div>
 				</div>
