@@ -25,12 +25,21 @@ if( isset( $_GET['path_section'] ) ) {
 		</div> 
 		
 		<?php if( isset( $_GET['path_item'] ) ) {
-			if( $_GET['path_item']=='updates' && is_numeric( $_GET['path_action'] ) ) { ?>
+			if( $_GET['path_item']=='updates' && is_numeric( $_GET['path_action'] ) ) {
+			$updateID = $_GET['path_action'];
+			?>
 		<ul class="updates">
 		<?php
-		if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE id = '{$_GET['path_action']}' LIMIT 1" ) ) {
+		if( $updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE id = '{$updateID}' LIMIT 1" ) ) {
 			foreach( $updates as $update ) {
 				require( TEMPLATE_PATH . '/partials/updates-loop.inc.php' );
+			}
+			if( $comments = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."comments WHERE updateID = '{$updateID}' ORDER BY timestamp ASC" ) ) {
+				foreach( $comments as $comment ) {
+					require( TEMPLATE_PATH . '/partials/comments-loop.inc.php' );
+				}
+			} else {
+				echo '<li class="no-comments">Whoa! Noone has commented on this yet!</li>';
 			}
 		} else {
 			echo '<li class="no-updates">Sadly, '.$profile->name.' hasn\'t posted any updates yet.</li>';
