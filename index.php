@@ -2,6 +2,21 @@
 session_start();
 ob_start();
 require_once('config.inc.php');
+
+function __autoload($class_name) {
+	if(file_exists(CLASSES_PATH . '/' . $class_name . '.class.php')) {
+		require_once(CLASSES_PATH . '/' . $class_name . '.class.php');
+	} else {
+		throw new Exception("Unable to load $class_name.");
+	}
+}
+try {
+	$utility = new Kin_Utility;
+	$notifications = new Kin_Notification;
+	$hashtags = new Kin_Hashtags;
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
 if( !isset( $_SESSION['userID'] ) && isset( $_COOKIE['kin_social_login'] ) ) {
 	$userHash = $db->escape( $_COOKIE['kin_social_login'] );
 	$userID = $db->get_var( "SELECT id FROM ".DB_TABLE_PREFIX."users WHERE userHash = '{$userHash}'" );
