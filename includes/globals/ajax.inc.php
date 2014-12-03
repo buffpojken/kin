@@ -19,11 +19,13 @@ if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQ
 					}
 				}
 				$update = new Kin_Updates($updateID);
-				$notifications->createNotification( 
-					$update->userID, 
-					$user->getUserData($_SESSION["userID"],'name', FALSE) .' '. $user->getUserData($_SESSION["userID"],'surname', FALSE) . ' commented on your status update.', 
-					'/profile/'.$user->getUserData($update->userID,'username', FALSE).'/updates/'. $updateID
-				);
+				if( $update->userID != $_SESSION['userID'] ) {
+					$notifications->createNotification( 
+						$update->userID, 
+						$user->getUserData($_SESSION["userID"],'name', FALSE) .' '. $user->getUserData($_SESSION["userID"],'surname', FALSE) . ' commented on your status update.', 
+						'/profile/'.$user->getUserData($update->userID,'username', FALSE).'/updates/'. $updateID
+					);
+				}
 			}
 		break;
 		case 'postUpdate':

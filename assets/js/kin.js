@@ -10,14 +10,14 @@ $(document).ready( function(){
 		var $text = $(this).text();
 		var $updateID = $(this).data('id');
 		var $identifier = $(this).attr('id');
-		if( $text == 'Like' ) {
+		if( $text === 'Like' ) {
 			request = $.ajax({
 				url: '/index.php',
 				type: 'post',
 				data: { ajax: '1', action:	'likeUpdate', updateID: $updateID }
 			});
 			
-			request.done(function (response, textStatus, jqXHR){
+			request.done(function (response, textStatus){
 				//console.log( 'The following message returned: '+ textStatus + ' / ', response );
 				$('a.likeUpdate#'+$identifier).text('Unlike');
 				$('a.likeUpdate#'+$identifier).siblings('span.like-description').text(' · You like this');
@@ -26,7 +26,7 @@ $(document).ready( function(){
 			request.fail(function (jqXHR, textStatus, errorThrown){
 				console.log( 'The following error occurred: '+ textStatus, errorThrown );
 			});
-		} else if( $text == 'Unlike' ) {
+		} else if( $text === 'Unlike' ) {
 			request = $.ajax({
 				url: '/index.php',
 				type: 'post',
