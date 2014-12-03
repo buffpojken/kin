@@ -39,13 +39,15 @@ if( isset( $_GET['path_section'] ) ) {
 					require( TEMPLATE_PATH . '/partials/comments-loop.inc.php' );
 				}
 			} else {
-				echo '<li class="no-comments">Whoa! Noone has commented on this yet!</li>';
+				echo '<li class="no-comments">Whoa! No one has commented on this yet!</li>';
 			}
 		} else {
 			echo '<li class="no-updates">Sadly, '.$profile->name.' hasn\'t posted any updates yet.</li>';
 		} ?>
 		</ul>
-			<?php } else {
+		<?php
+		require( TEMPLATE_PATH . '/partials/comment-form.inc.php' ); 
+			} else {
 				HEADER('Location: /');
 				exit;
 			}

@@ -2,10 +2,21 @@
 if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQUEST['ajax'] ) && $_REQUEST['ajax']==1 ) {
 	global $db;
 	switch( $_REQUEST['action'] ) {
-		case 'userLookup':
-			$usernames = array('Kara','Octavius','Nikita','Xenocratus');
-			$json = json_encode($usernames);
-			echo $json;
+		case 'postComment':
+			$comment = $db->escape( $hashtags->createHashtagLinks($_REQUEST['comment_message']) );
+			$updateID = $db->escape( $_REQUEST['updateID'] );
+			$latestComment = $db->escape( $_REQUEST['latestComment'] );
+			$result = $db->query("INSERT INTO ".DB_TABLE_PREFIX."comments(userID,updateID,comment) VALUES('{$_SESSION['userID']}', '{$updateID}', '{$comment}')");
+			if( $latestComment == 0 ) {
+				$comments = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."comments WHERE updateID ='{$updateID}' ORDER BY id DESC LIMIT 1" );
+			} else {
+				$comments = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."comments WHERE updateID ='{$updateID}' AND id > '{$latestComment}' ORDER BY id DESC" );
+			}
+			if( $comments ) {
+				foreach( $comments as $comment ) {
+					require( TEMPLATE_PATH . '/partials/comments-loop.inc.php' );
+				}
+			}
 		break;
 		case 'postUpdate':
 			$update = $db->escape( $hashtags->createHashtagLinks($_REQUEST['statusUpdate']) );

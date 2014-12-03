@@ -66,7 +66,7 @@ $(document).ready( function(){
 			//console.log( 'The following message returned: '+ textStatus + ' / ', response );
 			$('textarea#statusUpdate').val('');
 			$('textarea#statusUpdate').animate({ height: 30 }, 'normal');
-			$('ul#updates').hide().prepend(response).fadeIn('slow');
+			$('ul.updates').hide().prepend(response).fadeIn('slow');
 		});
 		
 		request.fail(function (jqXHR, textStatus, errorThrown){
@@ -75,6 +75,39 @@ $(document).ready( function(){
 		
 		request.always(function () {
 			$('textarea#statusUpdate').prop('disabled', false);
+		});
+		event.preventDefault();
+	});
+	
+	$('form#post-comment').submit(function(event){
+		var $form = $(this);
+		var $comment = $('input#comment_message').val();
+		var $updateID = $('input[name="updateID"]').val();
+		var $action = $('input[name="action"]').val();
+		var $latestComment = $('ul#updates > li.comment:last-child').data('updateId');
+		if( $latestComment === null ) {
+			$latestComment = 0;
+		}
+		$('input#comment_message').prop('disabled', true);
+		
+		request = $.ajax({
+			url: '/index.php',
+			type: 'post',
+			data: { ajax: '1', action:	$action, updateID: $updateID, comment_message: $comment, latestComment: $latestComment }
+		});
+		
+		request.done(function (response, textStatus, jqXHR){
+			console.log( 'The following message returned: '+ textStatus + ' / ', response );
+			$('input#comment_message').val('');
+			$('ul.updates').hide().append(response).fadeIn('slow');
+		});
+		
+		request.fail(function (jqXHR, textStatus, errorThrown){
+			console.log( 'The following error occurred: '+ textStatus, errorThrown );
+		});
+		
+		request.always(function () {
+			$('input#comment_message').prop('disabled', false);
 		});
 		event.preventDefault();
 	});
