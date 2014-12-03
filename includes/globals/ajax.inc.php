@@ -7,15 +7,23 @@ if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQ
 			$updateID = $db->escape( $_REQUEST['updateID'] );
 			$latestComment = $db->escape( $_REQUEST['latestComment'] );
 			$result = $db->query("INSERT INTO ".DB_TABLE_PREFIX."comments(userID,updateID,comment) VALUES('{$_SESSION['userID']}', '{$updateID}', '{$comment}')");
-			if( $latestComment == 0 ) {
-				$comments = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."comments WHERE updateID ='{$updateID}' ORDER BY id DESC LIMIT 1" );
-			} else {
-				$comments = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."comments WHERE updateID ='{$updateID}' AND id > '{$latestComment}' ORDER BY id DESC" );
-			}
-			if( $comments ) {
-				foreach( $comments as $comment ) {
-					require( TEMPLATE_PATH . '/partials/comments-loop.inc.php' );
+			if( $result ) {
+				if( $latestComment == 0 ) {
+					$comments = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."comments WHERE updateID ='{$updateID}' ORDER BY id DESC LIMIT 1" );
+				} else {
+					$comments = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."comments WHERE updateID ='{$updateID}' AND id > '{$latestComment}' ORDER BY id DESC" );
 				}
+				if( $comments ) {
+					foreach( $comments as $comment ) {
+						require( TEMPLATE_PATH . '/partials/comments-loop.inc.php' );
+					}
+				}
+				$update = new Kin_Updates($updateID);
+				$notifications->createNotification( 
+					$update->userID, 
+					$user->getUserData($_SESSION["userID"],'name', FALSE) .' '. $user->getUserData($_SESSION["userID"],'surname', FALSE) . ' commented on your status update.', 
+					'/profile/'.$user->getUserData($update->userID,'username', FALSE).'/updates/'. $updateID
+				);
 			}
 		break;
 		case 'postUpdate':
