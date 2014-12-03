@@ -178,7 +178,7 @@ if( isset( $_GET['path_section'] ) ) {
 					<label for="message_recipient">Please select the recipient</label>
 					<select class="form-control chosen-select" name="message_recipient" id="message_recipient">
 					<?php
-					if( $recipients = $db->get_results("SELECT * FROM ".DB_TABLE_PREFIX."users ORDER BY name ASC") ) {
+					if( $recipients = $db->get_results("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE hidden='0' ORDER BY name ASC") ) {
 						foreach( $recipients as $recipient ) {
 							echo '<option value="'.$recipient->id.'">'.$recipient->name.' '.$recipient->surname.'</option>';
 						}
