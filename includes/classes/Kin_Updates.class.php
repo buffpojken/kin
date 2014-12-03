@@ -70,4 +70,17 @@ class Kin_Updates {
 		}
 	}
 	
+	public function commentsLink( $updateID, $authorUsername ) {
+		global $db;
+		$updateID = $db->escape( $updateID );
+		$commentCount = $db->get_var( "SELECT COUNT(id) FROM ".DB_TABLE_PREFIX."comments WHERE updateID = '{$updateID}'" );
+		if( $commentCount == 0 ) {
+			$output = '<a href="/profile/'.$authorUsername.'/updates/'.$updateID.'">Write a comment</a>';
+		} elseif( $commentCount == 1 ) {
+			$output = '<a href="/profile/'.$authorUsername.'/updates/'.$updateID.'">1 comment</a>';
+		} else {
+			$output = '<a href="/profile/'.$authorUsername.'/updates/'.$updateID.'">'.$commentCount.' comments</a>';
+		}
+		echo $output;
+	}
 }

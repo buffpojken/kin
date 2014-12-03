@@ -21,7 +21,7 @@ $author = new Kin_User($data->userID);
 	<footer class="update-footer">
 		<p>
 			<a href="#" class="likeUpdate" id="like-<?php echo $update->id; ?>" data-id="<?php echo $update->id; ?>"><?php if( $utility->hasCurrentUserLikedThis($data->updateID) ) { echo 'Unlike'; } else { echo 'Like'; } ?></a> · 
-			<a href="/profile/<?php echo $author->username; ?>/updates/<?php echo $update->id; ?>">Comment</a>
+			<?php $data->commentsLink( $update->id, $author->username ); ?>
 			<span class="like-description"><?php $data->likeDescriptionOutput($update->id); ?></span>
 		</p>
 	</footer>
