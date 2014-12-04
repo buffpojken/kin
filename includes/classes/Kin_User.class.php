@@ -124,6 +124,7 @@ class Kin_User {
 		$mail->From = 'no-reply@czochabook.me';
 		$mail->FromName = 'CzochaBook';
 		$mail->addAddress($email);
+		$mail->addReplyTo('no-reply@czochabook.me', 'CzochaBook');
 		$mail->isHTML(true);
 		$mail->Subject = '[CzochaBook] Password Reset';
 		$mail->Body    = nl2br($emailContent);
