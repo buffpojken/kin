@@ -64,7 +64,7 @@ class Kin_Updates {
 			if( in_array( $_SESSION['userID'], $likes ) ) {
 				$output .= 'You and ' . $likeCount - 1 . ' others like this';
 			} else {
-				$output .= $likeCount . ' person likes this.';
+				$output .= $likeCount . ' people likes this.';
 			}
 			echo $output;
 		}
