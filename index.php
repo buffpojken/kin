@@ -63,7 +63,10 @@ require_once( GLOBALS_PATH . '/header.inc.php' );
 					<div class="col-sm-6">
 						<p class="copyright text-right">
 							Proudly powered by <a href="https://github.com/tmertz/kin">Kin</a>. Version <?php echo KIN_VERSION; ?><br />
-							<?php if( file_exists('.revision') ) { echo 'Build#: ' . file_get_contents('.revision'); } ?>
+							<?php if( file_exists('.revision') ) { 
+									$revision = file_get_contents('.revision');
+									echo '<small>Rev#: <a href="https://github.com/tmertz/kin/commit/'.$revision.'" target="_blank">'.$revision.'</a></small>' .  
+							} ?>
 						</p>
 					</div>
 				</div>
