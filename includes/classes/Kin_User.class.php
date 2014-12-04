@@ -104,21 +104,34 @@ class Kin_User {
 		$email = $db->escape($email);
 		$resetHash = sha1(time());
 		$db->query( "UPDATE ".DB_TABLE_PREFIX."users SET passwordResetHash='{$resetHash}' WHERE email ='{$email}'" );
-		$emailTemplate = file_get_contents( EMAIL_TEMPLATE_PATH . '/password_reset.txt' );
+		
 		$search = array( '{{password_reset_url}}' );
 		$replace = array( 'http://'.$_SERVER['SERVER_NAME'].'/?reset-key='.$resetHash );
+		$emailTemplate = file_get_contents( EMAIL_TEMPLATE_PATH . '/password_reset.txt' );
 		$emailContent = str_replace($search, $replace, $emailTemplate);
-		require_once( LIBRARY_PATH . '/simple_mail/class.simple_mail.php' );
-		$mail = new SimpleMail();
-		$mail->setTo($email)
-			 ->setSubject('[CzochaBook] Password Reset')
-			 ->setFrom('no-reply@czochabook.me', 'CzochaBook.me')
-			 ->addGenericHeader('X-Mailer', 'PHP/' . phpversion())
-			 ->addGenericHeader('Content-Type', 'text/html; charset="utf-8"')
-			 ->setMessage(nl2br($emailContent))
-			 ->setWrap(100);
-		$send = $mail->send();
-		return ($send) ? TRUE : FALSE;
+		
+		require_once( LIBRARY_PATH . '/PHPMailer/PHPMailerAutoload.php' );
+		$mail = new PHPMailer;
+		$mail->isSMTP();
+		$mail->Host = SMTP_SERVER;
+		$mail->SMTPAuth = true;
+		$mail->Username = SMTP_USER;
+		$mail->Password = SMTP_PASS;
+		$mail->SMTPSecure = 'SSL';
+		$mail->Port = SMTP_PORT;
+		$mail->From = 'no-reply@czochabook.me';
+		$mail->FromName = 'CzochaBook';
+		$mail->addAddress($email);
+		$mail->isHTML(true);
+		$mail->Subject = '[CzochaBook] Password Reset';
+		$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+		if(!$mail->send()) {
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} else {
+			echo 'Message has been sent';
+		}
+		#return ($mail->send()) ? TRUE : FALSE;
 	}
 	
 	public function updateProfile( $data, $portrait ) {
