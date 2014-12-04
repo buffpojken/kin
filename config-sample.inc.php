@@ -10,7 +10,15 @@ date_default_timezone_set('Europe/Copenhagen');
 //==================================
 //! ERROR HANDLING AND DEBUG
 //==================================
-error_reporting('E_NONE');
+error_reporting('E_ERROR');
+
+//==================================
+//! EMAIL SETUP
+//==================================
+define('SMTP_SERVER', '');
+define('SMTP_PORT', '');
+define('SMTP_USER', '');
+define('SMTP_PASS', '');
 
 //==================================
 //! PATHS
@@ -19,6 +27,7 @@ define('INCLUDE_PATH',realpath(dirname(__FILE__)).'/includes');
 define('CLASSES_PATH',realpath(dirname(__FILE__)).'/includes/classes');
 define('LIBRARY_PATH',realpath(dirname(__FILE__)).'/includes/libraries');
 define('TEMPLATE_PATH',realpath(dirname(__FILE__)).'/includes/templates');
+define('EMAIL_TEMPLATE_PATH',realpath(dirname(__FILE__)).'/assets/email_templates');
 define('GLOBALS_PATH',realpath(dirname(__FILE__)).'/includes/globals');
 define('UPLOADS_PATH',realpath(dirname(__FILE__)).'/uploads');
 
