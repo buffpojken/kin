@@ -52,14 +52,11 @@ class Kin_Private_Messages {
 		}
 	}
 	
-	public function markMessageAsRead( $messageID=FALSE ) {
+	public function markMessageAsRead( $threadID,$messageID ) {
 		global $db;
-		if( $messageID ) {
-			$messageID = $db->escape($messageID);
-		} else {
-			$messageID = $this->messageID;
-		}
-		$db->query( "UPDATE ".DB_TABLE_PREFIX."messages SET isRead='1' WHERE id='{$messageID}'" );
+		$messageID = $db->escape($messageID);
+		$threadID = $db->escape($threadID);
+		$db->query( "UPDATE ".DB_TABLE_PREFIX."pm_messages SET isRead='1' WHERE threadID='{$threadID}'" );
 	}
 	
 	public function sendMessage($recipientID,$subject,$message) {

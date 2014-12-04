@@ -7,7 +7,11 @@ if( isset( $_GET['path_section'] ) ) {
 		if( $messagesIDs = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."pm_messages WHERE threadID ='{$threadID}' ORDER BY id ASC" ) ) {
 			foreach( $messagesIDs as $messageID ) {
 				$message = new Kin_Private_Messages( $messageID->id );
-				$author = new Kin_User( $message->authorID );  ?>
+				$author = new Kin_User( $message->authorID );
+				if( $_SESSION['userID'] != $message->authorID ) {
+					$messageUtility->markMessageAsRead($message->threadID);
+				}
+				?>
 				<div class="media">
 					<a class="media-left" href="/profile/<?php echo $author->username; ?>/">
 					<?php
@@ -69,7 +73,11 @@ if( isset( $_GET['path_section'] ) ) {
 				$sender = new Kin_User($thread->senderID);
 				$recipient = new Kin_User($thread->recipientID);
 				echo '<tr>';
-				echo '<td><a href="/messages/'.$thread->id.'/">'.$message->subject.'</a></td>';
+				if( $message->isRead == 1 && $thread->senderID != $_SESSION['userID'] ) {
+					echo '<td><a href="/messages/'.$thread->id.'/">'.$message->subject.'</a></td>';
+				} else {
+					echo '<td><a href="/messages/'.$thread->id.'/"><strong>'.$message->subject.'</strong></a></td>';
+				}
 				echo '<td><a href="/profile/'.$sender->username.'/">' . $sender->name . ' ' . $sender->surname .'</a></td>';
 				echo '<td><a href="/profile/'.$recipient->username.'/">' . $recipient->name . ' ' . $recipient->surname .'</a></td>';
 				echo '<td>' . $utility->timeSince($message->timestamp, FALSE).'</td>';
