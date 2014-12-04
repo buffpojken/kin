@@ -9,20 +9,24 @@ class Kin_User {
 	var $siteAdmin;
 	
 	function __construct($userIdentificer=FALSE) {
-		global $db;
-		$userIdentifier = $db->escape($userIdentifier);
-		if( is_numeric( $userIdentificer ) ) {
-			$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE id = '{$userIdentificer}'");
-		} else {
-			$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE username = '{$userIdentificer}'");
+		if( $userIdentificer ) {
+			global $db;
+			$userIdentifier = $db->escape($userIdentifier);
+			if( is_numeric( $userIdentificer ) ) {
+				$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE id = '{$userIdentificer}'");
+			} elseif( filter_var( $userIdentifier, FILTER_VALIDATE_EMAIL ) ) {
+				$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE username = '{$userIdentificer}'");
+			} else {
+				$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE username = '{$userIdentificer}'");
+			}
+			$this->userID = $data->id;
+			$this->name = $data->name;
+			$this->surname = $data->surname;
+			$this->username = $data->username;
+			$this->email = $data->email;
+			$this->siteAdmin = $data->siteAdmin;
+			return $this;
 		}
-		$this->userID = $data->id;
-		$this->name = $data->name;
-		$this->surname = $data->surname;
-		$this->username = $data->username;
-		$this->email = $data->email;
-		$this->siteAdmin = $data->siteAdmin;
-		return $this;
 	}
 	
 	public function authorize($email, $password, $cookie) {
@@ -44,6 +48,9 @@ class Kin_User {
 		
 		if( $this->getUserData( $userID, 'password' ) == $hashedPassword ) {
 			$_SESSION['userID'] = $userID;
+			if( $cookie == 'yes' ) {
+				setcookie ( 'kin_social_login', $this->getUserData($userID,'userHash'), time() + 60 * 60 * 24 * 14 );
+			}
 			HEADER('Location: /');
 		} else {
 			$errors['db_info'] = "We were unable to find any user with that combination of email and password. Please try again.";
@@ -55,9 +62,6 @@ class Kin_User {
 				echo '<li>'.$error.'</li>';
 			}
 			echo '</ul></div>';
-		}
-		if( $cookie == 'yes' ) {
-			setcookie ( 'kin_social_login', $this->getUserData($userID,'userHash'), time() + 60 * 60 * 24 * 14 );
 		}
 	}
 	
@@ -102,7 +106,46 @@ class Kin_User {
 		$email = $db->escape($email);
 		$resetHash = sha1(time());
 		$db->query( "UPDATE ".DB_TABLE_PREFIX."users SET passwordResetHash='{$resetHash}' WHERE email ='{$email}'" );
-		#$db->debug();
+		
+		$search = array( '{{password_reset_url}}' );
+		$replace = array( 'http://'.$_SERVER['SERVER_NAME'].'/?reset-key='.$resetHash );
+		$emailTemplate = file_get_contents( EMAIL_TEMPLATE_PATH . '/password_reset.txt' );
+		$emailContent = str_replace($search, $replace, $emailTemplate);
+		
+		require_once( LIBRARY_PATH . '/PHPMailer/PHPMailerAutoload.php' );
+		$mail = new PHPMailer;
+		$mail->isSMTP();
+		$mail->Host = SMTP_SERVER;
+		$mail->SMTPAuth = true;
+		$mail->Username = SMTP_USER;
+		$mail->Password = SMTP_PASS;
+		$mail->SMTPSecure = 'ssl';
+		$mail->Port = SMTP_PORT;
+		$mail->From = 'no-reply@czochabook.me';
+		$mail->FromName = 'CzochaBook';
+		$mail->addAddress($email);
+		$mail->isHTML(true);
+		$mail->Subject = '[CzochaBook] Password Reset';
+		$mail->Body    = nl2br($emailContent);
+		return ($mail->send()) ? TRUE : FALSE;
+	}
+	
+	public function resetPassword( $resetKey, $resetEmail, $resetPasswordOne, $resetPasswordTwo ) {
+		global $db;
+		if( $resetPasswordOne == $resetPasswordTwo ) {
+			$resetKey = $db->escape($resetKey);
+			$resetEmail = $db->escape($resetEmail);
+			$hashedPassword = $db->escape(sha1( $resetPasswordOne . ENCRYPTION_SALT ));
+			if( $db->query( "UPDATE ".DB_TABLE_PREFIX."users SET password='{$hashedPassword}', passwordResetHash='0' WHERE email = '{$resetEmail}' AND passwordResetHash='{$resetKey}'" ) ) {
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+			
+		} else {
+			return FALSE;
+		}
+		$db->debug();
 	}
 	
 	public function updateProfile( $data, $portrait ) {
