@@ -1,7 +1,7 @@
 <?php
 class Kin_Private_Messages {
 	
-	var $messageID;
+	var $id;
 	var $threadID;
 	var $senderID;
 	var $recipientID;
@@ -14,11 +14,10 @@ class Kin_Private_Messages {
 		if( $messageIdentifier ) {
 			global $db;
 			$messageIdentifier = $db->escape($messageIdentifier);
-			$message = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."messages WHERE id = '{$messageIdentifier}'");
-			$this->messageID = $message->id;
+			$message = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."pm_messages WHERE id = '{$messageIdentifier}'");
+			$this->id = $message->id;
 			$this->threadID = $message->threadID;
-			$this->senderID = $message->senderID;
-			$this->recipientID = $message->recipientID;
+			$this->authorID = $message->authorID;
 			$this->timestamp = $message->timestamp;
 			$this->subject = $message->subject;
 			$this->message = $message->message;
@@ -27,11 +26,25 @@ class Kin_Private_Messages {
 		}
 	}
 	
-	public function canCurrentUserReadThis($userID,$messageID) {
+	function latestThreadReply($threadID) {
+		global $db;
+		$threadID = $db->escape($threadID);
+		$message = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."pm_messages WHERE threadID = '{$threadID}' ORDER BY id DESC LIMIT 1");
+		$this->id = $message->id;
+		$this->threadID = $message->threadID;
+		$this->authorID = $message->authorID;
+		$this->timestamp = $message->timestamp;
+		$this->subject = $message->subject;
+		$this->message = $message->message;
+		$this->isRead = $message->isRead;
+		return $this;
+	}
+	
+	public function canCurrentUserReadThis($userID,$threadID) {
 		global $db;
 		$userID = $db->escape($userID);
-		$messageID = $db->escape($messageID);
-		$result = $db->get_var( "SELECT COUNT(id) FROM ".DB_TABLE_PREFIX."messages WHERE id='{$messageID}' AND (senderID = '{$userID}' OR recipientID = '{$userID}')" );
+		$threadID = $db->escape($threadID);
+		$result = $db->get_var( "SELECT COUNT(id) FROM ".DB_TABLE_PREFIX."pm_threads WHERE id='{$threadID}' AND (senderID = '{$userID}' OR recipientID = '{$userID}')" );
 		if( $result > 0 ) {
 			return TRUE;
 		} else {
