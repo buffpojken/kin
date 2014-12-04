@@ -8,8 +8,12 @@
 		
 	}
 	if( isset( $_POST['action'] ) && $_POST['action']=='startPasswordReset' ) {
-		$user = new Kin_User();
-		$user->startPasswordReset( $_POST['reset_email'] );
+		$user = new Kin_User;
+		if( $user->startPasswordReset( $_POST['reset_email'] ) ) {
+			echo '<div class="alert alert-success" role="alert"><strong>Awesome!</strong> Check your email for instructions on how to reset your password!</div>';
+		} else {
+			echo '<div class="alert alert-danger" role="alert"><strong>Whoops!</strong> We were unable to reset your password. Please try again.<br />If the problem persists, please contact a site administrator.</div>';
+		}
 	} ?>
 	<div class="form-group">
 		<label for="login_email">Email address</label>

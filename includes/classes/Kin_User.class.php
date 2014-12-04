@@ -13,6 +13,8 @@ class Kin_User {
 		$userIdentifier = $db->escape($userIdentifier);
 		if( is_numeric( $userIdentificer ) ) {
 			$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE id = '{$userIdentificer}'");
+		} elseif( filter_var( $userIdentifier, FILTER_VALIDATE_EMAIL ) ) {
+			$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE username = '{$userIdentificer}'");
 		} else {
 			$data = $db->get_row("SELECT * FROM ".DB_TABLE_PREFIX."users WHERE username = '{$userIdentificer}'");
 		}
@@ -102,7 +104,21 @@ class Kin_User {
 		$email = $db->escape($email);
 		$resetHash = sha1(time());
 		$db->query( "UPDATE ".DB_TABLE_PREFIX."users SET passwordResetHash='{$resetHash}' WHERE email ='{$email}'" );
-		#$db->debug();
+		$emailTemplate = file_get_contents( EMAIL_TEMPLATE_PATH . '/password_reset.txt' );
+		$search = array( '{{password_reset_url}}' );
+		$replace = array( 'http://'.$_SERVER['SERVER_NAME'].'/?reset-key='.$resetHash );
+		$emailContent = str_replace($search, $replace, $emailTemplate);
+		require_once( LIBRARY_PATH . '/simple_mail/class.simple_mail.php' );
+		$mail = new SimpleMail();
+		$mail->setTo($email)
+			 ->setSubject('[CzochaBook] Password Reset')
+			 ->setFrom('no-reply@czochabook.me', 'CzochaBook.me')
+			 ->addGenericHeader('X-Mailer', 'PHP/' . phpversion())
+			 ->addGenericHeader('Content-Type', 'text/html; charset="utf-8"')
+			 ->setMessage(nl2br($emailContent))
+			 ->setWrap(100);
+		$send = $mail->send();
+		return ($send) ? TRUE : FALSE;
 	}
 	
 	public function updateProfile( $data, $portrait ) {
