@@ -65,7 +65,7 @@ require_once( GLOBALS_PATH . '/header.inc.php' );
 							Proudly powered by <a href="https://github.com/tmertz/kin">Kin</a>. Version <?php echo KIN_VERSION; ?><br />
 							<?php if( file_exists('.revision') ) { 
 									$revision = file_get_contents('.revision');
-									echo '<small>Rev#: <a href="https://github.com/tmertz/kin/commit/'.$revision.'" target="_blank">'.$revision.'</a></small>' .  
+									echo '<small>Rev#: <a href="https://github.com/tmertz/kin/commit/'.$revision.'" target="_blank">'.$revision.'</a></small>';
 							} ?>
 						</p>
 					</div>

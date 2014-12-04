@@ -127,7 +127,7 @@ $(document).ready( function(){
 		}
 	});
 	
-	$("input#profile_portrait").filestyle(({icon: false});
+	$('input#profile_portrait').filestyle({icon: false});
 });
 
 if(("standalone" in window.navigator) && window.navigator.standalone){
