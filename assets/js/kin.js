@@ -126,6 +126,8 @@ $(document).ready( function(){
 			}, 'normal');
 		}
 	});
+	
+	$("input#profile_portrait").filestyle(({icon: false});
 });
 
 if(("standalone" in window.navigator) && window.navigator.standalone){

@@ -18,6 +18,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
 		<script src="/assets/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/assets/js/chosen_v1.2.0/chosen.jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/assets/js/bootstrap-fileinput.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/assets/js/min/kin-min.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body<?php $utility->bodyClass(); ?>>
