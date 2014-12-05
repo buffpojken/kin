@@ -33,6 +33,7 @@ class Kin_Friendships {
 		if( !$this->areWeFriends($userID) ) {
 			global $db;
 			global $notifications;
+			global $user;
 			$userID = $db->escape( $userID );
 			$result = $db->query( "INSERT INTO ".DB_TABLE_PREFIX."friendships(userID, friendID) VALUES('{$_SESSION['userID']}','{$userID}')" );
 			if( $result ) {
