@@ -15,6 +15,7 @@ try {
 	$notifications = new Kin_Notification;
 	$hashtags = new Kin_Hashtags;
 	$messageUtility = new Kin_Private_Messages;
+	$friendships = new Kin_Friendships;
 } catch (Exception $e) {
     echo $e->getMessage(), "\n";
 }

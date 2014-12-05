@@ -4,7 +4,21 @@ if( isset( $_GET['path_section'] ) ) {
 		HEADER('Location: /');
 		exit;
 	} else {
-		$profile = new Kin_User($_GET['path_section']);		
+		$profile = new Kin_User($_GET['path_section']);
+		if( isset( $_POST['action'] ) && $_POST['action']=='unfriend' ) {
+			if( $friendships->destroyFriendship( $_POST['userID'] ) ) {
+				echo '<div class="alert alert-success" role="alert"><strong>That did it!</strong> You are no longer friends with ' . $profile->name . ' ' . $profile->surname . '. Don\'t regret it now.</div>';
+			} else {
+				echo '<div class="alert alert-danger" role="alert"><strong>Whoops!</strong> We couldn\'t revoke your friendship. Please try again.</div>';
+			}
+		}
+		if( isset( $_POST['action'] ) && $_POST['action']=='friend' ) {
+			if( $friendships->requestFriendship( $_POST['userID'] ) ) {
+				echo '<div class="alert alert-success" role="alert"><strong>Awesome!</strong> We\'ve told ' . $profile->name . ' ' . $profile->surname . ' that you think you should be friends. Now you just gotta wait!</div>';
+			} else {
+				echo '<div class="alert alert-danger" role="alert"><strong>Whoops!</strong> We were unable to send your friend request. Please try again.</div>';
+			}
+		}
 		?>
 		<div id="profileCard" class="well well-sm">
 			<?php
@@ -16,13 +30,23 @@ if( isset( $_GET['path_section'] ) ) {
 				echo '<img src="http://placehold.it/150/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait pull-left" />' . PHP_EOL;
 			} ?>
 			<h1><?php echo $profile->name . ' ' . $profile->surname; ?></h1>
-			<?php if( $profile->isCurrentUserFriendsWithThisProfile($profile->userID) && $profile->userID != $_SESSION['userID'] ) { ?>
-			<p>You already friends. <a href="#">Unfriend?</a></p>
-			<?php } elseif( $profile->userID != $_SESSION['userID'] ) { ?>
-			<p>You're not friends. <a href="#">Send friend request?</a></p>
-			<?php } ?>
+			<form role="form" method="post" action="">
+				<?php if( $friendships->areWeFriends( $profile->userID ) ) { ?>
+				<div class="btn-group" role="group" aria-label="...">
+					<!--<button type="button" class="btn btn-default btn-sm">Send message</button>-->
+					<button type="submit" name="action" value="unfriend" class="btn btn-danger btn-sm">Unfriend</button>
+					<input type="hidden" name="userID" value="<?php echo $profile->userID; ?>" />
+				</div>
+				<?php } else { ?>
+				<div class="btn-group" role="group" aria-label="...">
+					<!--<button type="button" class="btn btn-default btn-sm">Send message</button>-->
+					<button type="submit" name="action" value="friend" class="btn btn-default btn-sm">Add friend</button>
+					<input type="hidden" name="userID" value="<?php echo $profile->userID; ?>" />
+				</div>
+				<?php } ?>
+			</form>
 			<div class="clearfix"></div>
-		</div> 
+		</div>
 		
 		<?php if( isset( $_GET['path_item'] ) ) {
 			if( $_GET['path_item']=='updates' && is_numeric( $_GET['path_action'] ) ) {

@@ -267,7 +267,7 @@ class Kin_User {
 	
 	public function returnFriendsUserIDs($userID = FALSE ) {
 		global $db;
-		$friendsUserIDs = $db->get_results( "(SELECT userID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE friendID ='".$userID."') UNION (SELECT friendID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE userID ='".$userID."')", ARRAY_N );
+		$friendsUserIDs = $db->get_results( "(SELECT userID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE friendID ='".$userID."' AND isConfirmed='1') UNION (SELECT friendID as profileID FROM ".DB_TABLE_PREFIX."friendships WHERE userID ='".$userID."' AND isConfirmed='1')", ARRAY_N );
 		foreach($friendsUserIDs as $k=>$v) {
 			$friends[$k] = $v[0];
 		}
