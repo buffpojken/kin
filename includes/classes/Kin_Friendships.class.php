@@ -58,8 +58,8 @@ class Kin_Friendships {
 		$result = $db->query( "UPDATE ".DB_TABLE_PREFIX."friendships SET isConfirmed='1' WHERE userID='{$friendID}' AND friendID='{$_SESSION['userID']}'" );
 		if( $result ) {
 			$notifications->createNotification( 
-					$userID, 
-					$user->getUserData($friendID,'name', FALSE).' '.$user->getUserData($friendID,'surname', FALSE) . ' has approved your friend request. Yay.',
+					$friendID, 
+					$user->getUserData($_SESSION['userID'],'name', FALSE).' '.$user->getUserData($_SESSION['userID'],'surname', FALSE) . ' has approved your friend request. Yay.',
 					'/profile/'.$user->getUserData($friendID,'username', FALSE).'/' 
 				);
 			return TRUE;
