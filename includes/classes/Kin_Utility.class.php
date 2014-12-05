@@ -48,10 +48,12 @@ class Kin_Utility {
 		global $db;
 		$key = $db->escape( $key );
 		$option = $db->get_var( "SELECT option_value FROM ".DB_TABLE_PREFIX."options WHERE option_key = '{$key}'" );
-		if( $echo ) {
-			echo $option;
-		} else {
-			return $option;
+		if( $option ) {
+			if( $echo ) {
+				echo $option;
+			} else {
+				return $option;
+			}
 		}
 	}
 	

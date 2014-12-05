@@ -72,6 +72,7 @@ require_once( GLOBALS_PATH . '/header.inc.php' );
 				</div>
 			</div>
 		</footer>
+		<?php $utility->siteOptions('SITE_FOOTER_SCRIPTS', TRUE); ?>
 	</body>
 </html>
 <?php ob_end_flush(); ?>
