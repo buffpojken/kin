@@ -70,7 +70,8 @@ class Kin_Friendships {
 	public function rejectFriendship( $friendID ) {
 		global $db;
 		$friendID = $db->escape( $friendID );
-		$result = $db->query( "UPDATE ".DB_TABLE_PREFIX."friendships SET isRejected='1' WHERE userID='{$_SESSION['userID']}' AND friendID='{$friendID}'" );
+		$result = $db->query( "UPDATE ".DB_TABLE_PREFIX."friendships SET isRejected='1' WHERE userID='{$friendID}' AND friendID='{$_SESSION['userID']}'" );
+		#$db->debug();
 		if( $result ) {
 			return TRUE;
 		} else {
