@@ -30,6 +30,7 @@ if( isset( $_GET['path_section'] ) ) {
 				echo '<img src="http://placehold.it/150/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait pull-left" />' . PHP_EOL;
 			} ?>
 			<h1><?php echo $profile->name . ' ' . $profile->surname; ?></h1>
+			<?php if( $profile->userID != $_SESSION['userID'] ) { ?>
 			<form role="form" method="post" action="">
 				<?php if( $friendships->areWeFriends( $profile->userID ) ) { ?>
 				<div class="btn-group" role="group" aria-label="...">
@@ -45,6 +46,7 @@ if( isset( $_GET['path_section'] ) ) {
 				</div>
 				<?php } ?>
 			</form>
+			<?php } ?>
 			<div class="clearfix"></div>
 		</div>
 		
