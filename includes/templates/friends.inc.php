@@ -24,7 +24,7 @@
 	} ?>
 	<table class="table table-striped">
 	<?php 
-	if( $friendRequests = $db->get_results( "SELECT friendID FROM ".DB_TABLE_PREFIX."friendships WHERE friendID='{$_SESSION['userID']}' AND isConfirmed='0' AND isRejected='0'" ) ) {
+	if( $friendRequests = $db->get_results( "SELECT friendID,userID FROM ".DB_TABLE_PREFIX."friendships WHERE friendID='{$_SESSION['userID']}' AND isConfirmed='0' AND isRejected='0'" ) ) {
 		foreach( $friendRequests as $friendRequest ) {
 			$profile = new Kin_User($friendRequest->userID);
 			$firstInitial = substr($profile->name, 0, 1);
