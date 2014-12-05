@@ -31,7 +31,6 @@ if( isset( $_GET['path_section'] ) ) {
 		}
 		$threadID = $db->escape($_GET['path_section']);
 		if( $messageIDs = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."messages WHERE threadID = '{$threadID}' ORDER BY timestamp ASC" ) ) { ?>
-	<hr />
 	<ul class="media-list">
 		<?php foreach( $messageIDs as $messageID ) {
 			$message = new Kin_Private_Messages($messageID->id); 
