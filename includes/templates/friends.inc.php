@@ -31,7 +31,7 @@
 			$lastInitial = substr($profile->surname, 0, 1);
 			$output .= '<tr>' . PHP_EOL;
 			$output .= '<td>'.$profile->name . ' ' . $profile->surname . ' wants to be your friend.</td>' . PHP_EOL;
-			$output .= '<td align="right"><form role="form" method="post" action=""><div class="btn-group btn-group-sm" role="group"><button type="submit" class="btn btn-sm btn-success" name="action" value="acceptFriendship">Accept</button><button type="submit" class="btn btn-sm btn-danger" name="action" value="rejectFriendship">Reject</button></div><input type="hidden" name="friendID" value="'.$friendRequest->friendID.'" /></form></td>';
+			$output .= '<td align="right"><form role="form" method="post" action=""><div class="btn-group btn-group-sm" role="group"><button type="submit" class="btn btn-sm btn-success" name="action" value="acceptFriendship">Accept</button><button type="submit" class="btn btn-sm btn-danger" name="action" value="rejectFriendship">Reject</button></div><input type="hidden" name="friendID" value="'.$friendRequest->userID.'" /></form></td>';
 			$output .= '</tr>' . PHP_EOL;
 			unset($profile);
 		}
