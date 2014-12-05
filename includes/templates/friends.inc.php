@@ -46,6 +46,14 @@
 	<div class="page-header">
 		<h1>Friends</h1>
 	</div>
+	<?php
+	if( isset( $_POST['action'] ) && $_POST['action']=='unfriend' ) {
+		if( $friendships->destroyFriendship( $_POST['userID'] ) ) {
+			echo '<div class="alert alert-success" role="alert"><strong>That did it!</strong> You are no longer friends with ' . $user->getUserData($_POST['userID'],'name', FALSE). ' ' .$user->getUserData($_POST['userID'],'surname', FALSE) . '. Don\'t regret it now.</div>';
+		} else {
+			echo '<div class="alert alert-danger" role="alert"><strong>Whoops!</strong> We couldn\'t revoke your friendship. Please try again.</div>';
+		}
+	} ?>
 	<p>
 		<ul class="nav nav-tabs nav-justified">
 			<li role="presentation" class="active"><a href="/friends/">Friend List</a></li>
@@ -53,34 +61,29 @@
 		</ul>
 	</p>
 	<table class="table table-striped">
-	<?php 
-	if( $friends = $user->returnFriendsUserIDs( $_SESSION['userID'] ) ) {
-	foreach( $friends as $friend ) {
-		$profile = new Kin_User($friend);
-		$firstInitial = substr($profile->name, 0, 1);
-		$lastInitial = substr($profile->surname, 0, 1);
-		?>
+	<?php if( $friends = $user->returnFriendsUserIDs( $_SESSION['userID'] ) ) {
+		foreach( $friends as $friend ) {
+			$profile = new Kin_User($friend);
+			?>
 		<tr>
-			<td>
+			<td width="5%">
 			<?php
 			if( file_exists( UPLOADS_PATH . '/avatars/'.$profile->userID.'-40x40.jpg' ) ) {
-				$output .= '<a href="/profile/'.$profile->username.'"><img src="/uploads/avatars/'.$profile->userID.'-40x40.jpg" class="portrait" /></a>';
+				echo '<a href="/profile/'.$profile->username.'"><img src="/uploads/avatars/'.$profile->userID.'-40x40.jpg" class="portrait" /></a>';
 			} else {
-				$output .= '<a href="/profile/'.$profile->username.'"><img src="http://placehold.it/40/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait" /></a>';
+				$firstInitial = substr($profile->name, 0, 1);
+				$lastInitial = substr($profile->surname, 0, 1);
+				echo '<a href="/profile/'.$profile->username.'"><img src="http://placehold.it/40/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait" /></a>';
 			} ?>
 			</td>
 			<td><a href="/profile/<?php echo $profile->username; ?>"><strong><?php echo $profile->name . ' ' . $profile->surname; ?></strong></a></td>
 			<td align="right">
 				<form role="form" method="post" action="" class="text-right">
-					<button type="submit" class="btn btn-xs btn-danger" name="action" value="unfriend">&times;</button>
-					<input type="hidden" name="friendID" value="'.$friend.'" />
+					<button type="submit" class="btn btn-xs btn-danger" name="action" value="unfriend">Unfriend</button>
+					<input type="hidden" name="userID" value="<?php echo $friend; ?>" />
 				</form>
 			</td>
 		</tr>
-	<?php } else { ?>
-		<tr>
-			<td class="text-center">No active friends found. Bummer!</td>
-		</tr>
 	<?php } ?>
 	</table>
-<?php } ?>
+<?php } } ?>
