@@ -22,6 +22,7 @@ Thumbs.db
 /uploads/avatars/*.jpg
 /uploads/avatars/*.gif
 /uploads/avatars/*.png
+/includes/templates/import.inc.php
 config.codekit
 config.inc.php
 dandelion.yml
