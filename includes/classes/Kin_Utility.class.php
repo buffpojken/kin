@@ -21,7 +21,8 @@ class Kin_Utility {
 				
 				} elseif( $_GET['path_page'] == 'messages' ) {
 				
-					$message = new Kin_Private_Messages($_GET['path_section']);
+					$message = new Kin_Private_Messages;
+					$message = $message->latestThreadReply($_GET['path_section']);
 					$output = $message->subject . ' · Messages · ' . $this->siteOptions('SITE_NAME', FALSE);
 				
 				} else {

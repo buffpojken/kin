@@ -1,62 +1,87 @@
-<?php 
-$messageUtility = new Kin_Private_Messages();
-if( isset( $_GET['path_section'] ) ) {
-	echo '<p><a href="/messages/" class="btn btn-default">Return to inbox</a></p><hr />';
-	if( is_numeric( $_GET['path_section'] ) && $messageUtility->canCurrentUserReadThis($_SESSION['userID'], $_GET['path_section']) ) {
-		$threadID = $db->escape($_GET['path_section']);
-		if( $messagesIDs = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."pm_messages WHERE threadID ='{$threadID}' ORDER BY id ASC" ) ) {
-			foreach( $messagesIDs as $messageID ) {
-				$message = new Kin_Private_Messages( $messageID->id );
-				$author = new Kin_User( $message->authorID );
-				if( $_SESSION['userID'] != $message->authorID ) {
-					$messageUtility->markMessageAsRead($message->threadID);
-				}
-				?>
-				<div class="media">
-					<a class="media-left" href="/profile/<?php echo $author->username; ?>/">
-					<?php
-					if( file_exists( UPLOADS_PATH . '/avatars/'.$author->userID.'-40x40.jpg' ) ) {
-						echo '<img src="/uploads/avatars/'.$author->userID.'-40x40.jpg" class="portrait" />' . PHP_EOL;
-					} else {
-						$firstInitial = substr($author->name, 0, 1);
-						$lastInitial = substr($author->surname, 0, 1);
-						echo '<img src="http://placehold.it/40/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait" />' . PHP_EOL;
-					} ?>
-					</a>
-					<div class="media-body">
-					<h4 class="media-heading"><?php echo nl2br($message->subject); ?> <small>from <a href="/profile/<?php echo $author->username; ?>/"><?php echo $author->name . ' ' . $author->surname; ?></a><br /> <?php echo $utility->timeSince($message->timestamp); ?></small></h4>
-						<p><?php echo nl2br($message->message); ?></p>
-					</div>
-				</div>
-			<?php } ?>
-			<hr />
-		<?php } else {
-			HEADER('Location: /messages/');
-			exit;
-		}
-	?>
-	<?php } else {
-		HEADER('Location: /messages/');
-		exit;
-	}
-} else { ?>	
 	<div class="page-header">
 		<h1>Messages</h1>
 	</div>
-	<?php if( isset( $_POST['action'] ) && $_POST['action']=='sendMessage' ) {
-		if( $messageUtility->sendMessage( $_POST['message_recipient'], $_POST['message_subject'], $_POST['message_content'] ) ) {
-			echo '<div class="alert alert-success" role="alert"><strong>Hooray!</strong> Your message was sent!</div>';
-		} else {
-			echo '<div class="alert alert-danger" role="alert"><strong>Boo!</strong> Your message wasn\'t sent!</div>';
+	<div class="btn-group" role="group" aria-label="...">
+	<?php if( isset( $_GET['path_section'] ) ) { ?>
+		<a href="/messages/" class="btn btn-default">Back to inbox</a>
+	<?php } ?>
+		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#composeMessage">Compose message</button>
+	</div>
+	<hr />
+<?php 
+if( isset( $_POST['action'] ) && $_POST['action']=='sendMessage' ) {
+	if( $messageUtility->sendMessage($_POST['message_recipient'],$_POST['message_subject'],$_POST['message_content']) ) {
+		echo '<div class="alert alert-success" role="alert"><strong>Delightful!</strong> Your message is now on it\'s way to your friend. Rejoice!</div>';
+	} else {
+		echo '<div class="alert alert-danger" role="alert"><strong>Whoops!</strong> Something went wrong and your message wasn\'t sent. Please try again.</div>';
+	}
+}
+$messageUtility = new Kin_Private_Messages();
+if( isset( $_GET['path_section'] ) ) {
+	if( !$messageUtility->canCurrentUserReadThis($_GET['path_section']) && !is_numeric($_GET['path_section']) ) {
+		HEADER('Location: /');
+		exit;
+	} else {
+		if( isset( $_POST['action'] ) && $_POST['action']=='sendMessageReply' ) {
+			if( $messageUtility->sendReply($_POST['recipientID'],$_POST['reply_content'],$_POST['threadID'],$_POST['subject']) ) {
+				echo '<div class="alert alert-success" role="alert"><strong>Delightful!</strong> Your message is now on it\'s way to your friend. Rejoice!</div>';
+			} else {
+				echo '<div class="alert alert-danger" role="alert"><strong>Whoops!</strong> Something went wrong and your reply wasn\'t sent. Please try again.</div>';
+			}
 		}
-	} ?>
-	<?php if( isset( $_POST['action'] ) && $_POST['action']=='bulkEditMessages' ) {
-		foreach( $_POST['messages'] as $message ) {
-			$messageUtility->moveMessagesToArchive($message);
+		$threadID = $db->escape($_GET['path_section']);
+		if( $messageIDs = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."messages WHERE threadID = '{$threadID}' ORDER BY timestamp ASC" ) ) { ?>
+	<hr />
+	<ul class="media-list">
+		<?php foreach( $messageIDs as $messageID ) {
+			$message = new Kin_Private_Messages($messageID->id); 
+			$author = new Kin_User($message->senderID); ?>
+		<li class="media">
+			<a class="media-left" href="#">
+			<?php
+			if( file_exists( UPLOADS_PATH . '/avatars/'.$author->userID.'-40x40.jpg' ) ) {
+				echo '<img src="/uploads/avatars/'.$author->userID.'-40x40.jpg" class="portrait" />' . PHP_EOL;
+			} else {
+				$firstInitial = substr($author->name, 0, 1);
+				$lastInitial = substr($author->surname, 0, 1);
+				echo '<img src="http://placehold.it/40/158cba/ffffff&text='.$firstInitial.'+'.$lastInitial.'" class="portrait" />' . PHP_EOL;
+			} ?>
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading"><?php echo $message->subject; ?></h4>
+				<p><?php echo nl2br($message->message); ?></p>
+			</div>
+		</li>
+		<?php } ?>
+	</ul>
+	<hr />
+	<form class="form-horizontal" role="form" method="post" action="">
+		<div class="form-group">
+			<label for="reply_content" class="col-sm-2 control-label">Reply</label>
+			<div class="col-sm-6">
+				<textarea class="form-control" id="reply_content" name="reply_content" rows="5"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-6">
+				<button type="submit" class="btn btn-default">Send your reply</button>
+			</div>
+		</div>
+		<input type="hidden" name="action" value="sendMessageReply" />
+		<input type="hidden" name="subject" value="<?php echo $message->subject; ?>" />
+		<input type="hidden" name="threadID" value="<?php echo $_GET['path_section']; ?>" />
+		<input type="hidden" name="recipientID" value="<?php echo $author->userID; ?>" />
+	</form>
+			
+			
+		<?php } else {
+			HEADER('Location: /');
+			exit;
 		}
 	}
-	
-	if( $threads = $db->get_results( "SELECT ".DB_TABLE_PREFIX."pm_threads.id, ".DB_TABLE_PREFIX."pm_threads.senderID, ".DB_TABLE_PREFIX."pm_threads.recipientID FROM ".DB_TABLE_PREFIX."pm_threads INNER JOIN ".DB_TABLE_PREFIX."pm_messages ON ".DB_TABLE_PREFIX."pm_threads.id = ".DB_TABLE_PREFIX."pm_messages.threadID WHERE ".DB_TABLE_PREFIX."pm_threads.senderID ='{$_SESSION['userID']}' OR ".DB_TABLE_PREFIX."pm_threads.recipientID ='{$_SESSION['userID']}' GROUP BY ".DB_TABLE_PREFIX."pm_messages.threadID ORDER BY ".DB_TABLE_PREFIX."pm_messages.id DESC" ) ) { ?>
+} else { ?>	
+	<?php
+	if( $threads = $db->get_results( "SELECT threadID FROM ".DB_TABLE_PREFIX."messages WHERE recipientID='{$_SESSION['userID']}' AND senderID<>'{$_SESSION['userID']}' GROUP BY threadID ORDER BY id DESC" ) ) { ?>
 	<form role="form" method="post" action="">
 		<table class="table table-hover">
 			<thead>
@@ -68,28 +93,24 @@ if( isset( $_GET['path_section'] ) ) {
 				</tr>
 			</thead>
 			<tbody>
-			<?php foreach( $threads as $thread ) {
-				$message = $messageUtility->latestThreadReply($thread->id);
-				$sender = new Kin_User($thread->senderID);
-				$recipient = new Kin_User($thread->recipientID);
-				echo '<tr>';
-				if( $message->isRead == 1 && $thread->senderID != $_SESSION['userID'] ) {
-					echo '<td><a href="/messages/'.$thread->id.'/">'.$message->subject.'</a></td>';
-				} else {
-					echo '<td><a href="/messages/'.$thread->id.'/"><strong>'.$message->subject.'</strong></a></td>';
-				}
-				echo '<td><a href="/profile/'.$sender->username.'/">' . $sender->name . ' ' . $sender->surname .'</a></td>';
-				echo '<td><a href="/profile/'.$recipient->username.'/">' . $recipient->name . ' ' . $recipient->surname .'</a></td>';
-				echo '<td>' . $utility->timeSince($message->timestamp, FALSE).'</td>';
-				echo '<tr>';
-			} ?>
+			<?php foreach($threads as $thread) { 
+				$message = $messageUtility->latestThreadReply($thread->threadID);
+				$author = new Kin_User($message->senderID);
+				$recipient = new Kin_User($message->recipientID);
+			?>
+				<tr>
+					<td><a href="/messages/<?php echo $thread->threadID; ?>/"><?php echo $message->subject; ?></a></td>
+					<td><?php echo $author->name . ' ' . $author->surname; ?></td>
+					<td><?php echo $recipient->name . ' ' . $recipient->surname; ?></td>
+					<td><?php echo $message->timestamp; ?></td>
+				</tr>
+			<?php } ?>
 			</tbody>
 		</table>
 		<!--<button type="submit" class="btn btn-default btn-sm">Move selected to archive</button>
 		<input type="hidden" name="action" value="bulkEditMessages" />-->
 	</form>
 	<?php  } else {
-		#$db->debug();
 		echo '<p class="text-center">You have no messages.</p>';
 	} ?>
 <?php } ?>

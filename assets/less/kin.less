@@ -1,6 +1,9 @@
 @black: #111111;
 
 body {
+	img.portrait {
+		border-radius: 3px;
+	}
 	#site-body {
 		background-color: white;
 		min-height: 100vh;
@@ -37,7 +40,6 @@ body {
 					img.portrait {
 						float: left;
 						margin: 0 10px 0 0;
-						border-radius: 3px;
 					}
 					h4 {
 						margin: 0;
@@ -86,7 +88,6 @@ body {
 					img.portrait {
 						margin: 0 10px 10px 0;
 						height: auto;
-						border-radius: 3px;
 						float: left;
 					}
 				}
@@ -196,9 +197,6 @@ body.profile {
 		padding: 10px 10px 5px;
 		border-bottom-left-radius: 3px;
 		border-bottom-right-radius: 3px;
-		img.portrait {
-			border-radius: 3px;
-		}
 	}
 }
 body.notifications {
@@ -207,22 +205,6 @@ body.notifications {
 			list-style: none;
 			margin: 0;
 			padding: 0;
-		}
-	}
-}
-body.messages {
-	p.metadata {
-		background-color: lighten(@black, 85%);
-		border-radius: 3px;
-		padding: 5px 8px;
-		font-size: 1.1em;
-	}
-	section.message-body {
-		padding: 10px 20px 20px;
-	}
-	td.user-info {
-		img.portrait {
-			border-radius: 3px;
 		}
 	}
 }
