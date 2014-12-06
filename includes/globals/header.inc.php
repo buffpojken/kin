@@ -57,6 +57,14 @@
 								<?php $unreadCount = $notifications->unreadNotificationCount( $_SESSION["userID"] ); if( $unreadCount > 0 ) { echo '<span class="badge">'.$unreadCount.'</span>'; } ?>
 							</a>
 						</li>
+						<?php if( $user->getUserData($_SESSION["userID"],'siteAdmin') == 1 ) { ?>
+						<li<?php if( $_GET['path_page'] =='administration' ) { echo ' class="active"'; } ?>>
+							<a href="/administration/" data-toggle="tooltip" data-placement="bottom" title="Administration">
+								<span class="glyphicon glyphicon-cog hidden-xs" aria-hidden="true"></span> 
+								<span class="hidden-sm hidden-md hidden-lg">Administration</span>
+							</a>
+						</li>
+						<?php } ?>
 						<li<?php if( $_GET['path_page'] =='logout' ) { echo ' class="active"'; } ?>>
 							<a href="/logout/" data-toggle="tooltip" data-placement="bottom" title="Logout">
 								<span class="glyphicon glyphicon-log-out hidden-xs" aria-hidden="true"></span> 
