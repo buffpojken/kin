@@ -26,4 +26,5 @@ Thumbs.db
 config.codekit
 config.inc.php
 dandelion.yml
+!/assets/migrations/*
 !/assets/sql/kin_db_structure.sql
