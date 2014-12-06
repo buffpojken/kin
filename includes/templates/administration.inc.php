@@ -6,8 +6,9 @@
 	<h1>Administration</h1>
 </div>
 <?php if( isset( $_POST['action'] ) && $_POST['action']=='updateSiteSettings' ) {
-	echo '<pre>' . print_r($_POST,true) . '</pre>';
-} ?>
+	$utility->updateSiteSettings($_POST);
+}
+?>
 <form role="form" method="post" action="" class="form-horizontal">
 	<fieldset>
 		<legend>General Settings</legend>

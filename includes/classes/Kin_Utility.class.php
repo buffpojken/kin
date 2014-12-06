@@ -121,22 +121,6 @@ class Kin_Utility {
 		}
 	}
 	
-	public function getOnlineUsers(){
-		if ( $directory_handle = opendir( session_save_path() ) ) {
-			$count = 0;
-			while ( false !== ( $file = readdir( $directory_handle ) ) ) {
-				if($file != '.' && $file != '..'){
-					// Comment the 'if(...){' and '}' lines if you get a significant amount of traffic 
-					if(time()- fileatime(session_save_path() . '\\' . $file) < MAX_IDLE_TIME * 60) { 
-						$count++;
-					}
-				}
-				closedir($directory_handle);
-				return $count; 
-			}
-		} else { 
-			return false; 
-		}
-	}
+	public function updateSiteSettings( $input ) {}
 
 }
