@@ -19,7 +19,7 @@
 		<div role="tabpanel" class="tab-pane active" id="friends">
 			<ul class="updates">
 			<?php
-			$friendIDs = implode(",", $user->returnFriendsUserIDs( $_SESSION['userID'] ));
+			$friendIDs = implode(",", $user->returnFriendsUserIDs( $_SESSION['userID'], $includeSelf = true));
 			$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE userID IN ($friendIDs) ORDER BY id DESC LIMIT 15" );
 			foreach( $updates as $update ) {
 				require( TEMPLATE_PATH . '/partials/updates-loop.inc.php' );
