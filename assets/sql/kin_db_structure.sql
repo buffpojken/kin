@@ -126,6 +126,7 @@ CREATE TABLE `kin_updates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `userID` int(11) DEFAULT NULL,
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastActivityTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `message` longtext,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
