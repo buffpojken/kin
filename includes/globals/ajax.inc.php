@@ -48,7 +48,9 @@ if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQ
 			$db->query("INSERT INTO ".DB_TABLE_PREFIX."likes(userID,updateID) VALUES('{$_SESSION['userID']}', '{$updateID}')");
 			$update = new Kin_Updates($updateID);
 			$author = new Kin_User($update->userID);
-			$notifications->createNotification( $update->userID, $user->name .' ' . $user->surname . ' has liked your post.' , '/profile/'.$author->username.'/updates/'.$updateID );
+			if($update->userID != $author->userID){
+				$notifications->createNotification( $update->userID, $user->name .' ' . $user->surname . ' has liked your post.' , '/profile/'.$author->username.'/updates/'.$updateID );				
+			}
 			unset($update);
 			unset($author);
 		break;

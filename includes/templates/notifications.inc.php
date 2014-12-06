@@ -68,5 +68,5 @@ if( isset( $_GET['path_section'] ) && $_GET['path_section']=='redirect' ) {
 	</tbody>
 </table>
 <?php } else {
-	echo '<p class="text-center">You have no unread notifications.</p>';
+	echo '<p class="text-center">You have no read notifications.</p>';
 } ?>
