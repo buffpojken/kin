@@ -18,8 +18,10 @@ if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQ
 						require( TEMPLATE_PATH . '/partials/comments-loop.inc.php' );
 					}
 				}
-				Kin_SubscriptionManager::createSubscription($updateID, $_SESSION['userID']); 
+				Kin_SubscriptionManager::activateSubscription($updateID, $_SESSION['userID']); 
 				$update = new Kin_Updates($updateID);
+				Kin_SubscriptionManager::commentPostedOnUpdate($update, $_SESSION['userID'], $_REQUEST['comment_message']);					
+
 				// if( $update->userID != $_SESSION['userID'] ) {
 				// 	$notifications->createNotification( 
 				// 		$update->userID, 
@@ -39,7 +41,7 @@ if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQ
 			} else {
 				$updates = $db->get_results( "SELECT id FROM ".DB_TABLE_PREFIX."updates WHERE id > '{$latestUpdate}' ORDER BY id DESC" );
 			}
-			Kin_SubscriptionManager::createSubscription($updateID, $_SESSION['userID']); 
+			Kin_SubscriptionManager::activateSubscription($updateID, $_SESSION['userID']); 
 			if( $updates ) {
 				foreach( $updates as $update ) {
 					require( TEMPLATE_PATH . '/partials/updates-loop.inc.php' );
@@ -51,10 +53,11 @@ if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQ
 			$db->query("INSERT INTO ".DB_TABLE_PREFIX."likes(userID,updateID) VALUES('{$_SESSION['userID']}', '{$updateID}')");
 			$update = new Kin_Updates($updateID);
 			$author = new Kin_User($update->userID);
-			if($update->userID != $author->userID){
-				$notifications->createNotification( $update->userID, $user->name .' ' . $user->surname . ' has liked your post.' , '/profile/'.$author->username.'/updates/'.$updateID );				
-			}
-			Kin_SubscriptionManager::createSubscription($updateID, $_SESSION['userID']); 
+			// if($update->userID != $author->userID){
+			// 	$notifications->createNotification( $update->userID, $user->name .' ' . $user->surname . ' has liked your post.' , '/profile/'.$author->username.'/updates/'.$updateID );				
+			// }
+			Kin_SubscriptionManager::activateSubscription($updateID, $_SESSION['userID']);
+			Kin_SubscriptionManager::likePostedOnUpdate($update, $_SESSION['userID']);
 			unset($update);
 			unset($author);
 		break;
@@ -62,6 +65,10 @@ if( isset( $_SESSION['userID'] ) && isset( $_REQUEST['action'] ) && isset( $_REQ
 			$updateID = $db->escape( $_REQUEST['updateID'] );
 			$db->query("DELETE FROM ".DB_TABLE_PREFIX."likes WHERE userID = '{$_SESSION['userID']}' AND updateID='{$updateID}'");
 		break;
+		case 'toggleSubscription': 
+			$result = Kin_SubscriptionManager::toggleSubscription($_REQUEST['updateID'], $_SESSION['userID']); 
+			echo json_encode($result);
+		break; 
 	}	
 	exit;
 }

@@ -4,6 +4,9 @@ $author = new Kin_User($data->userID);
 ?>	
 <li class="update" data-update-id="<?php echo $update->id; ?>">
 	<header class="update-header">
+		<a href="#" class="subscription-management-link subscription-management-<?php echo $update->id ?>" data-update-id="<?php echo $update->id ?>">
+			<?php if($utility->userSubscribesTo($data->updateID) ){ echo 'Unfollow'; } else {echo 'Follow'; } ?>
+		</a>
 		<?php
 		if( file_exists( UPLOADS_PATH . '/avatars/'.$author->userID.'-40x40.jpg' ) ) {
 			echo '<img src="/uploads/avatars/'.$author->userID.'-40x40.jpg" class="portrait" />' . PHP_EOL;

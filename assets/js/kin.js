@@ -5,6 +5,27 @@ $(document).ready( function(){
 		width: "100%",
 		max_selected_options: 1
 	});
+
+	$("a.subscription-management-link").on('click', function(){
+		var _t = $(this);
+		var request = $.ajax({
+			url: '/index.php', 
+			type: 'post',
+			dataType: 'json',
+			data: {
+				ajax: '1', 
+				action: 'toggleSubscription', 
+				updateID: $(this).attr('data-update-id')
+			}
+		}); 
+		request.done(function(response, textStatus){
+			if(response.subscribed){
+				_t.text('Unfollow'); 
+			}else{
+				_t.text('Follow');
+			}
+		});
+	});
 	
 	$('a.likeUpdate').on('click', function() {
 		var $text = $(this).text();
@@ -20,6 +41,7 @@ $(document).ready( function(){
 			request.done(function (response, textStatus){
 				//console.log( 'The following message returned: '+ textStatus + ' / ', response );
 				$('a.likeUpdate#'+$identifier).text('Unlike');
+				$('.subscription-management-'+$updateID).text('Unfollow');
 				$('a.likeUpdate#'+$identifier).siblings('span.like-description').text(' · You like this');
 			});
 			
@@ -35,6 +57,7 @@ $(document).ready( function(){
 			
 			request.done(function (response, textStatus, jqXHR){
 				console.log( 'The following message returned: '+ textStatus + ' / ', response );
+				$('.subscription-management-'+$updateID).text('Follow');
 				$('a.likeUpdate#'+$identifier).text('Like');
 				$('a.likeUpdate#'+$identifier).siblings('span.like-description').empty();
 			});
@@ -99,6 +122,7 @@ $(document).ready( function(){
 		request.done(function (response, textStatus, jqXHR){
 			//console.log( 'The following message returned: '+ textStatus + ' / ', response );
 			$('input#comment_message').val('');
+			$('.subscription-management-'+$updateID).text('Unfollow');
 			$('ul.updates').hide().append(response).fadeIn('slow');
 		});
 		
